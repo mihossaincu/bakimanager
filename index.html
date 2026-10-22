@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>দোকান বাকি ম্যানেজার</title>
+<meta name="description" content="সহজে দোকানের বাকি হিসাব রাখুন এবং হোয়াটসঅ্যাপে রসিদ পাঠান। আপনার হিসাব শুধু আপনার ফোনেই থাকে।">
+<meta name="theme-color" content="#059669">
+<meta property="og:type" content="website">
+<meta property="og:title" content="দোকান বাকি ম্যানেজার">
+<meta property="og:description" content="সহজে বাকি হিসাব রাখুন ও হোয়াটসঅ্যাপে রসিদ পাঠান।">
+<!-- <meta property="og:image" content="https://YOUR-DOMAIN/preview.png"> -->
+<!-- <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#10b981;--primary-dark:#059669;--secondary:#1e293b;--bg:#f8fafc;--danger:#ef4444;--success:#16a34a;--muted:#64748b;--line:#e2e8f0}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:#334155;padding:12px}
+.container{max-width:520px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.05);overflow:hidden}
+.header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:20px 16px;text-align:center}
+.header h1{font-size:1.35rem;margin-bottom:4px}
+.header p{font-size:.85rem;opacity:.92}
+.user-counter{background:rgba(255,255,255,.2);display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;margin-top:8px}
+.form-section{padding:16px;border-bottom:1px solid var(--line)}
+.form-group{margin-bottom:12px}
+.form-group label.t{display:block;font-size:.82rem;font-weight:600;margin-bottom:4px;color:#475569}
+.form-control{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;font-size:.95rem}
+.form-control:focus{outline:2px solid var(--primary);border-color:transparent}
+.radio-group{display:flex;gap:10px}
+.radio-group label{flex:1}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.radio-label{text-align:center;padding:9px;border:1px solid #cbd5e1;border-radius:8px;cursor:pointer;font-size:.85rem;font-weight:600}
+input:checked+.radio-label.baki{background:#fee2e2;color:var(--danger);border-color:var(--danger)}
+input:checked+.radio-label.pari{background:#dcfce7;color:var(--success);border-color:var(--success)}
+input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset:2px}
+.btn{width:100%;padding:12px;border:none;background:var(--primary);color:#fff;font:inherit;font-weight:700;font-size:.95rem;border-radius:8px;cursor:pointer}
+.btn:active{transform:scale(.98)}
+.btn.ghost{background:#f1f5f9;color:#334155;font-weight:600;font-size:.8rem;padding:9px}
+.summary{display:flex;justify-content:space-between;padding:12px 16px;background:#f1f5f9;font-weight:700;font-size:.92rem}
+.summary .total{color:var(--danger)}
+.list-section{padding:16px}
+.list-head{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+.list-head input{flex:1}
+.shop{border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.shop summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:12px;gap:8px}
+.shop summary::-webkit-details-marker{display:none}
+.shop .name{font-weight:700;font-size:.95rem}
+.shop .sub{font-size:.75rem;color:#94a3b8}
+.bal{text-align:right;font-weight:700}
+.bal small{display:block;font-size:.72rem;font-weight:600}
+.bal.due{color:var(--danger)}.bal.adv{color:var(--success)}.bal.zero{color:var(--muted)}
+.shop-body{border-top:1px solid var(--line);padding:8px 12px 12px;background:#fcfdff}
+.tx{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.85rem}
+.tx:last-of-type{border-bottom:none}
+.tx .d{font-size:.72rem;color:#94a3b8}
+.tx .ds{font-size:.78rem;color:var(--muted)}
+.tx .v.baki{color:var(--danger);font-weight:700}
+.tx .v.pari{color:var(--success);font-weight:700}
+.tx button.del{background:none;border:none;color:#94a3b8;cursor:pointer;font-size:.75rem;margin-top:2px}
+.wa-btn{display:inline-flex;align-items:center;gap:4px;background:#25d366;color:#fff;border:none;padding:7px 12px;border-radius:6px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;margin-top:8px}
+.tools{display:flex;gap:8px;padding:0 16px 16px;flex-wrap:wrap}
+.tools .btn{flex:1;min-width:30%}
+.empty{text-align:center;color:#94a3b8;font-size:.85rem;padding:10px}
+.privacy{font-size:.74rem;color:var(--muted);text-align:center;padding:0 16px 14px}
+.dev-footer{max-width:520px;margin:14px auto 0;background:var(--secondary);color:#fff;text-align:center;padding:12px;font-size:.8rem;border-radius:12px}
+.dev-footer strong{color:var(--primary)}
+.dev-footer a{color:#6ee7b7;text-decoration:none}
+.dev-footer button{background:none;border:1px solid #475569;color:#e2e8f0;border-radius:6px;padding:3px 10px;font:inherit;font-size:.74rem;cursor:pointer;margin-left:6px}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1 id="appTitle">দোকান বাকি ম্যানেজার</h1>
+    <p>সহজে বাকি হিসাব রাখুন ও হোয়াটসঅ্যাপে রসিদ পাঠান</p>
+    <div class="user-counter">📊 মোট অ্যাপ ব্যবহারকারী: <span id="userCount">…</span> জন</div>
+  </div>
+
+  <form class="form-section" id="txForm" autocomplete="off">
+    <div class="form-group">
+      <label class="t" for="shopName">দোকানদারের নাম</label>
+      <input type="text" id="shopName" class="form-control" placeholder="যেমন: রহিম স্টোর" list="shopList" required maxlength="60">
+      <datalist id="shopList"></datalist>
+    </div>
+    <div class="form-group">
+      <label class="t" for="shopPhone">হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
+      <input type="tel" id="shopPhone" class="form-control" placeholder="যেমন: 01815643159" inputmode="tel" maxlength="20">
+    </div>
+    <div class="form-group">
+      <span class="t" style="display:block;font-size:.82rem;font-weight:600;margin-bottom:4px;color:#475569">লেনদেনের ধরন</span>
+      <div class="radio-group">
+        <label><input class="sr-only" type="radio" name="type" value="baki" checked><div class="radio-label baki">বাকি নিলাম (−)</div></label>
+        <label><input class="sr-only" type="radio" name="type" value="pari"><div class="radio-label pari">টাকা পরিশোধ (+)</div></label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="t" for="amount">টাকার পরিমাণ (৳)</label>
+      <input type="number" id="amount" class="form-control" placeholder="0" inputmode="decimal" min="0.01" step="0.01" required>
+    </div>
+    <div class="form-group">
+      <label class="t" for="desc">বিবরণ / পণ্যের তালিকা (ঐচ্ছিক)</label>
+      <input type="text" id="desc" class="form-control" placeholder="যেমন: চাল, তেল, ডাল" maxlength="120">
+    </div>
+    <button class="btn" type="submit">হিসেব যোগ করুন</button>
+  </form>
+
+  <div class="summary"><span>সব দোকান মিলিয়ে মোট বাকি:</span><span class="total" id="totalBaki">৳ ০</span></div>
+
+  <div class="list-section">
+    <div class="list-head">
+      <input type="search" id="search" class="form-control" placeholder="🔍 দোকানের নাম খুঁজুন" aria-label="দোকান খুঁজুন">
+    </div>
+    <div id="shopListWrap"></div>
+  </div>
+
+  <div class="tools">
+    <button class="btn ghost" id="btnExport" type="button">⬇ ব্যাকআপ (JSON)</button>
+    <button class="btn ghost" id="btnCsv" type="button">📄 CSV</button>
+    <button class="btn ghost" id="btnImport" type="button">⬆ রিস্টোর</button>
+    <input type="file" id="importFile" accept="application/json,.json" class="sr-only">
+  </div>
+  <p class="privacy">🔒 আপনার হিসাব শুধু আপনার ফোনেই থাকে। ব্রাউজারের ডেটা মুছলে হিসাব হারিয়ে যাবে, তাই মাঝে মাঝে ব্যাকআপ নিন।</p>
+</div>
+
+<div class="dev-footer">
+  Developed with ❤️ by <strong id="devName"></strong> ·
+  <a id="devPhone" href="#"></a>
+  <button type="button" id="btnShare">অ্যাপ শেয়ার করুন</button>
+</div>
+
+<script>
+/* ============ CONFIG (এক জায়গা থেকে সব বদলান) ============ */
+const CONFIG = {
+  appName: 'দোকান বাকি ম্যানেজার',
+  developer: 'MI Hossain',
+  contactPhone: '01815643159',
+  gaId: 'G-XSFXC2MJBC',            // GA4 Measurement ID
+  counterNs: 'mi_hossain_baki_app',
+  counterKey: 'users'
+};
+const KEY = 'baki_manager_v2';
+const OLD_KEY = 'my_baki_manager_data_v1';
+const COUNTED = 'baki_counted';
+
+/* ============ Helpers ============ */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nf = new Intl.NumberFormat('bn-BD', { maximumFractionDigits: 2 });
+const money = p => '৳ ' + nf.format(p / 100);          // p = পয়সা (পূর্ণসংখ্যা)
+const fmtDate = ts => new Date(ts).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+const keyOf = n => n.trim().toLowerCase();
+
+function normPhone(raw) {
+  let p = String(raw || '').replace(/\D/g, '');
+  if (!p) return '';
+  if (p.startsWith('880')) return p;
+  if (p.startsWith('0')) return '88' + p;
+  if (p.length === 10 && p.startsWith('1')) return '880' + p;
+  return p;
+}
+
+/* ============ Analytics (GA4) — শুধু ইভেন্ট, কোনো নাম/ফোন/টাকা নয় ============ */
+function initGA() {
+  const id = CONFIG.gaId;
+  if (!/^G-[A-Z0-9]{6,}$/.test(id) || id === 'G-XXXXXXXXXX') return;
+  if (navigator.doNotTrack === '1') return;
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', id);
+}
+function track(evt, params = {}) { try { window.gtag && gtag('event', evt, params); } catch (e) {} }
+
+/* ============ User counter (প্রতি ব্রাউজারে একবারই গণনা) ============ */
+async function trackUsers() {
+  const el = $('userCount');
+  const base = `https://api.counterapi.dev/v1/${CONFIG.counterNs}/${CONFIG.counterKey}`;
+  let first = false;
+  try { first = !localStorage.getItem(COUNTED); } catch (e) {}
+  try {
+    const res = await fetch(first ? base + '/up' : base);
+    const data = await res.json();
+    el.textContent = nf.format(Number(data.count));
+    if (first) try { localStorage.setItem(COUNTED, '1'); } catch (e) {}
+  } catch (e) { el.textContent = '—'; }
+}
+
+/* ============ Storage ============ */
+function migrate(r) {
+  if (!r || !r.shopName || !(r.amount > 0)) return null;
+  return { id: r.id || Date.now() + Math.random(), shop: String(r.shopName), phone: String(r.shopPhone || ''),
+           type: r.type === 'pari' ? 'pari' : 'baki', paisa: Math.round(r.amount * 100),
+           desc: String(r.desc || ''), ts: r.id || Date.now() };
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) {
+      try { const d = JSON.parse(raw); if (Array.isArray(d.tx)) return d.tx; }
+      catch (e) { localStorage.setItem(KEY + '_corrupt', raw); }
+    }
+    const old = localStorage.getItem(OLD_KEY);
+    if (old) { const arr = JSON.parse(old); if (Array.isArray(arr)) return arr.map(migrate).filter(Boolean); }
+  } catch (e) {}
+  return [];
+}
+let tx = load();
+let warned = false;
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify({ v: 2, tx })); }
+  catch (e) { if (!warned) { warned = true; alert('ডেটা সংরক্ষণ করা যায়নি। প্রাইভেট মোডে থাকলে সাধারণ মোডে খুলুন।'); } }
+}
+
+/* ============ Grouping ============ */
+function groupShops() {
+  const map = new Map();
+  for (const t of tx) {
+    const k = keyOf(t.shop);
+    if (!map.has(k)) map.set(k, { name: t.shop, phone: '', list: [], bal: 0, last: 0 });
+    const g = map.get(k);
+    g.list.push(t);
+    g.bal += t.type === 'baki' ? t.paisa : -t.paisa;
+    if (t.ts >= g.last) { g.last = t.ts; g.name = t.shop; if (t.phone) g.phone = t.phone; }
+    else if (!g.phone && t.phone) g.phone = t.phone;
+  }
+  for (const g of map.values()) g.list.sort((a, b) => b.ts - a.ts);
+  return [...map.values()].sort((a, b) => b.last - a.last);
+}
+
+/* ============ Render ============ */
+function balView(b) {
+  if (b > 0) return { cls: 'due', label: 'বাকি', txt: money(b) };
+  if (b < 0) return { cls: 'adv', label: 'অগ্রিম', txt: money(-b) };
+  return { cls: 'zero', label: 'পরিশোধিত', txt: money(0) };
+}
+function render() {
+  const shops = groupShops();
+  const q = keyOf($('search').value || '');
+  let total = 0;
+  shops.forEach(s => { if (s.bal > 0) total += s.bal; });
+  $('totalBaki').textContent = money(total);
+
+  $('shopList').innerHTML = shops.map(s => `<option value="${esc(s.name)}">`).join('');
+
+  const shown = shops.filter(s => !q || keyOf(s.name).includes(q));
+  if (!shown.length) {
+    $('shopListWrap').innerHTML = `<p class="empty">${tx.length ? 'কিছু পাওয়া যায়নি।' : 'এখনো কোনো হিসেব যোগ করা হয়নি।'}</p>`;
+    return;
+  }
+  $('shopListWrap').innerHTML = shown.map(s => {
+    const b = balView(s.bal);
+    const key = esc(keyOf(s.name));
+    return `<details class="shop" ${q ? 'open' : ''}>
+      <summary>
+        <div><div class="name">${esc(s.name)}</div><div class="sub">${nf.format(s.list.length)} টি লেনদেন · সর্বশেষ ${fmtDate(s.last)}</div></div>
+        <div class="bal ${b.cls}">${b.txt}<small>${b.label}</small></div>
+      </summary>
+      <div class="shop-body">
+        ${s.list.map(t => `
+          <div class="tx">
+            <div><div class="d">${fmtDate(t.ts)}</div>${t.desc ? `<div class="ds">${esc(t.desc)}</div>` : ''}
+              <button class="del" data-del="${esc(t.id)}" type="button">মুছুন</button></div>
+            <div class="v ${t.type}">${t.type === 'baki' ? '+' : '−'} ${money(t.paisa)}<div class="ds">${t.type === 'baki' ? 'বাকি' : 'জমা'}</div></div>
+          </div>`).join('')}
+        ${s.phone ? `<button class="wa-btn" data-wa="${key}" type="button">📲 হোয়াটসঅ্যাপে হিসাব পাঠান</button>` : ''}
+      </div>
+    </details>`;
+  }).join('');
+}
+
+/* ============ Actions ============ */
+$('txForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const shop = $('shopName').value.trim();
+  const phone = $('shopPhone').value.trim();
+  const type = document.querySelector('input[name="type"]:checked').value;
+  const amt = parseFloat($('amount').value);
+  const desc = $('desc').value.trim();
+  if (!shop || !isFinite(amt) || amt <= 0) { alert('অনুগ্রহ করে দোকানদারের নাম এবং সঠিক টাকার পরিমাণ লিখুন!'); return; }
+  tx.unshift({ id: Date.now() + Math.random().toString(36).slice(2, 6), shop, phone, type,
+               paisa: Math.round(amt * 100), desc, ts: Date.now() });
+  save(); render();
+  track('add_transaction', { type });
+  $('amount').value = ''; $('desc').value = ''; $('amount').focus();
+});
+
+$('shopName').addEventListener('change', () => {
+  const g = groupShops().find(s => keyOf(s.name) === keyOf($('shopName').value));
+  if (g && g.phone && !$('shopPhone').value) $('shopPhone').value = g.phone;
+});
+$('search').addEventListener('input', render);
+
+$('shopListWrap').addEventListener('click', e => {
+  const del = e.target.closest('[data-del]');
+  if (del) {
+    if (!confirm('এই লেনদেনটি মুছে ফেলবেন?')) return;
+    tx = tx.filter(t => String(t.id) !== del.dataset.del);
+    save(); render(); track('delete_transaction');
+    return;
+  }
+  const wa = e.target.closest('[data-wa]');
+  if (wa) sendWhatsApp(wa.dataset.wa);
+});
+
+function sendWhatsApp(shopKey) {
+  const g = groupShops().find(s => keyOf(s.name) === shopKey);
+  if (!g) return;
+  const phone = normPhone(g.phone);
+  if (!phone) { alert('হোয়াটসঅ্যাপ নম্বর দেওয়া হয়নি!'); return; }
+  const t = g.list[0];
+  const b = balView(g.bal);
+  const act = t.type === 'baki' ? `৳${nf.format(t.paisa / 100)} বাকি নেওয়া হলো` : `৳${nf.format(t.paisa / 100)} পরিশোধ করা হলো`;
+  const msg = `আসসালামু আলাইকুম ${g.name} ভাই,\n\n${fmtDate(t.ts)} তারিখে আপনার হিসাবে ${act}।\nবিবরণ: ${t.desc || 'নাই'}\n\nবর্তমান মোট ${b.label}: ${b.txt}\n\nধন্যবাদ।\n(${CONFIG.appName} থেকে প্রেরিত)`;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  track('whatsapp_share');
+}
+
+/* ============ Backup / Restore ============ */
+function download(name, text, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+const stamp = () => new Date().toISOString().slice(0, 10);
+$('btnExport').onclick = () => {
+  if (!tx.length) { alert('ব্যাকআপ নেওয়ার মতো কোনো ডেটা নেই।'); return; }
+  download(`baki-backup-${stamp()}.json`, JSON.stringify({ v: 2, tx }, null, 1), 'application/json');
+  track('export_backup', { format: 'json' });
+};
+$('btnCsv').onclick = () => {
+  if (!tx.length) { alert('কোনো ডেটা নেই।'); return; }
+  const q = v => '"' + String(v).replace(/"/g, '""') + '"';
+  const rows = [['তারিখ', 'দোকান', 'ফোন', 'ধরন', 'টাকা', 'বিবরণ'].map(q).join(',')];
+  [...tx].sort((a, b) => a.ts - b.ts).forEach(t => rows.push([
+    new Date(t.ts).toISOString().slice(0, 10), t.shop, t.phone, t.type === 'baki' ? 'বাকি' : 'জমা', t.paisa / 100, t.desc].map(q).join(',')));
+  download(`baki-${stamp()}.csv`, '\ufeff' + rows.join('\n'), 'text/csv;charset=utf-8');
+  track('export_backup', { format: 'csv' });
+};
+$('btnImport').onclick = () => $('importFile').click();
+$('importFile').onchange = async e => {
+  const f = e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    const incoming = (Array.isArray(d.tx) ? d.tx : []).filter(t => t && t.shop && t.paisa > 0 && (t.type === 'baki' || t.type === 'pari'))
+      .map(t => ({ id: t.id ?? Date.now() + Math.random().toString(36).slice(2, 6), shop: String(t.shop), phone: String(t.phone || ''),
+                   type: t.type, paisa: Math.round(t.paisa), desc: String(t.desc || ''), ts: Number(t.ts) || Date.now() }));
+    if (!incoming.length) { alert('ফাইলে কোনো সঠিক ডেটা পাওয়া যায়নি।'); return; }
+    const have = new Set(tx.map(t => String(t.id)));
+    const fresh = incoming.filter(t => !have.has(String(t.id)));
+    if (!confirm(`${nf.format(fresh.length)} টি নতুন লেনদেন যোগ করা হবে। চালিয়ে যাবেন?`)) return;
+    tx = tx.concat(fresh); save(); render(); track('import_backup');
+  } catch (err) { alert('ফাইলটি পড়া যায়নি। সঠিক ব্যাকআপ ফাইল দিন।'); }
+};
+
+/* ============ Credit & share ============ */
+$('devName').textContent = CONFIG.developer;
+$('devPhone').textContent = 'Contact: ' + CONFIG.contactPhone;
+$('devPhone').href = 'tel:' + CONFIG.contactPhone;
+$('devPhone').addEventListener('click', () => track('contact_click'));
+$('btnShare').onclick = async () => {
+  const data = { title: CONFIG.appName, text: 'সহজে দোকানের বাকি হিসাব রাখুন:', url: location.href };
+  try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); alert('লিংক কপি হয়েছে।'); } track('share_app'); } catch (e) {}
+};
+
+/* ============ Start ============ */
+initGA();
+trackUsers();
+render();
+</script>
+</body>
+</html>
