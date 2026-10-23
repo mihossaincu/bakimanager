@@ -4,20 +4,25 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>দোকান বাকি ম্যানেজার</title>
-<meta name="description" content="সহজে দোকানের বাকি হিসাব রাখুন এবং হোয়াটসঅ্যাপে রসিদ পাঠান। আপনার হিসাব শুধু আপনার ফোনেই থাকে।">
+<meta name="description" content="সহজে দোকানের বাকি হিসাব রাখুন, বিল তৈরি করুন এবং পিডিএফ ভাউচার পাঠান। আপনার হিসাব শুধু আপনার ফোনেই থাকে।">
 <meta name="theme-color" content="#059669">
 <meta property="og:type" content="website">
 <meta property="og:title" content="দোকান বাকি ম্যানেজার">
-<meta property="og:description" content="সহজে বাকি হিসাব রাখুন ও হোয়াটসঅ্যাপে রসিদ পাঠান।">
-<!-- <meta property="og:image" content="https://YOUR-DOMAIN/preview.png"> -->
+<meta property="og:description" content="সহজে বাকি হিসাব রাখুন, বিল তৈরি করুন ও পিডিএফ ভাউচার পাঠান।">
+<!-- <meta property="og:image" content="https://YOUR-DOMAIN/icons/icon-512.png"> -->
 <!-- <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="বাকি ম্যানেজার">
 <style>
 :root{--primary:#10b981;--primary-dark:#059669;--secondary:#1e293b;--bg:#f8fafc;--danger:#ef4444;--success:#16a34a;--muted:#64748b;--line:#e2e8f0}
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:#334155;padding:12px}
+/* ফোনের নিজস্ব বাংলা সিস্টেম ফন্ট */
+body{font-family:'Noto Sans Bengali','Nikosh','SolaimanLipi','Bangla Sangam MN','Kohinoor Bangla',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:#334155;padding:12px}
+button,input,select,textarea{font-family:inherit}
 .container{max-width:520px;margin:0 auto;background:#fff;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.05);overflow:hidden}
 .header{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:#fff;padding:20px 16px;text-align:center}
 .header h1{font-size:1.35rem;margin-bottom:4px}
@@ -25,8 +30,8 @@ body{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,-apple-system,'Se
 .user-counter{background:rgba(255,255,255,.2);display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;margin-top:8px}
 .form-section{padding:16px;border-bottom:1px solid var(--line)}
 .form-group{margin-bottom:12px}
-.form-group label.t{display:block;font-size:.82rem;font-weight:600;margin-bottom:4px;color:#475569}
-.form-control{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit;font-size:.95rem}
+.lbl{display:block;font-size:.82rem;font-weight:600;margin-bottom:4px;color:#475569}
+.form-control{width:100%;padding:10px 12px;border:1px solid #cbd5e1;border-radius:8px;font-size:.95rem;background:#fff;color:inherit}
 .form-control:focus{outline:2px solid var(--primary);border-color:transparent}
 .radio-group{display:flex;gap:10px}
 .radio-group label{flex:1}
@@ -35,14 +40,29 @@ body{font-family:'Noto Sans Bengali','Hind Siliguri',system-ui,-apple-system,'Se
 input:checked+.radio-label.baki{background:#fee2e2;color:var(--danger);border-color:var(--danger)}
 input:checked+.radio-label.pari{background:#dcfce7;color:var(--success);border-color:var(--success)}
 input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset:2px}
-.btn{width:100%;padding:12px;border:none;background:var(--primary);color:#fff;font:inherit;font-weight:700;font-size:.95rem;border-radius:8px;cursor:pointer}
+.btn{width:100%;padding:12px;border:none;background:var(--primary);color:#fff;font-weight:700;font-size:.95rem;border-radius:8px;cursor:pointer}
 .btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.6}
 .btn.ghost{background:#f1f5f9;color:#334155;font-weight:600;font-size:.8rem;padding:9px}
+.btn.dark{background:var(--secondary)}
+.tabs{display:flex;gap:6px;background:#f1f5f9;padding:4px;border-radius:10px;margin-bottom:14px}
+.tab{flex:1;border:none;background:none;padding:9px 6px;border-radius:8px;font-size:.84rem;font-weight:700;color:var(--muted);cursor:pointer}
+.tab[aria-selected="true"]{background:#fff;color:var(--primary-dark);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.item{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px;background:#fcfdff}
+.item .r1{display:flex;gap:6px;margin-bottom:6px}
+.item .r2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;align-items:end}
+.item .r2 .lbl{font-size:.7rem;margin-bottom:2px}
+.item .rowtot{font-weight:700;font-size:.92rem;padding:10px 0;text-align:right;color:var(--primary-dark)}
+.item .rm{border:none;background:#fee2e2;color:var(--danger);border-radius:8px;width:40px;font-size:1rem;cursor:pointer}
+.addrow{border:1px dashed var(--primary);background:#ecfdf5;color:var(--primary-dark);font-weight:700;border-radius:8px;padding:9px;width:100%;cursor:pointer;margin-bottom:12px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.calc{background:#f8fafc;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:4px 0 12px;font-size:.88rem}
+.calc div{display:flex;justify-content:space-between;padding:3px 0}
+.calc .big{font-weight:700;font-size:1rem;border-top:1px solid var(--line);margin-top:4px;padding-top:7px}
+.calc .due{color:var(--danger)}.calc .adv{color:var(--success)}
 .summary{display:flex;justify-content:space-between;padding:12px 16px;background:#f1f5f9;font-weight:700;font-size:.92rem}
 .summary .total{color:var(--danger)}
 .list-section{padding:16px}
-.list-head{display:flex;gap:8px;align-items:center;margin-bottom:10px}
-.list-head input{flex:1}
 .shop{border:1px solid var(--line);border-radius:10px;margin-bottom:8px;overflow:hidden}
 .shop summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:12px;gap:8px}
 .shop summary::-webkit-details-marker{display:none}
@@ -58,59 +78,121 @@ input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset
 .tx .ds{font-size:.78rem;color:var(--muted)}
 .tx .v.baki{color:var(--danger);font-weight:700}
 .tx .v.pari{color:var(--success);font-weight:700}
-.tx button.del{background:none;border:none;color:#94a3b8;cursor:pointer;font-size:.75rem;margin-top:2px}
-.wa-btn{display:inline-flex;align-items:center;gap:4px;background:#25d366;color:#fff;border:none;padding:7px 12px;border-radius:6px;font:inherit;font-size:.78rem;font-weight:600;cursor:pointer;margin-top:8px}
+.tx .acts{display:flex;gap:10px;margin-top:2px}
+.tx .acts button{background:none;border:none;color:#94a3b8;cursor:pointer;font-size:.75rem;padding:2px 0}
+.tx .acts button.vc{color:var(--primary-dark);font-weight:700}
+.wa-btn{display:inline-flex;align-items:center;gap:4px;background:#25d366;color:#fff;border:none;padding:7px 12px;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;margin-top:8px}
 .tools{display:flex;gap:8px;padding:0 16px 16px;flex-wrap:wrap}
 .tools .btn{flex:1;min-width:30%}
 .empty{text-align:center;color:#94a3b8;font-size:.85rem;padding:10px}
 .privacy{font-size:.74rem;color:var(--muted);text-align:center;padding:0 16px 14px}
-.dev-footer{max-width:520px;margin:14px auto 0;background:var(--secondary);color:#fff;text-align:center;padding:12px;font-size:.8rem;border-radius:12px}
+.dev-footer{max-width:520px;margin:14px auto 0;background:var(--secondary);color:#fff;text-align:center;padding:12px;font-size:.8rem;border-radius:12px;line-height:2}
 .dev-footer strong{color:var(--primary)}
 .dev-footer a{color:#6ee7b7;text-decoration:none}
-.dev-footer button{background:none;border:1px solid #475569;color:#e2e8f0;border-radius:6px;padding:3px 10px;font:inherit;font-size:.74rem;cursor:pointer;margin-left:6px}
+.dev-footer button{background:none;border:1px solid #475569;color:#e2e8f0;border-radius:6px;padding:3px 10px;font-size:.74rem;cursor:pointer;margin-left:4px}
+.dev-footer button.inst{border-color:var(--primary);color:#6ee7b7}
+dialog{border:none;border-radius:14px;padding:18px;width:min(92vw,420px);box-shadow:0 10px 40px rgba(0,0,0,.3)}
+dialog::backdrop{background:rgba(15,23,42,.55)}
+dialog h2{font-size:1.05rem;margin-bottom:6px;color:var(--primary-dark)}
+dialog p{font-size:.85rem;color:var(--muted);margin-bottom:12px}
+dialog .stack{display:grid;gap:8px}
+/* ভাউচার (পিডিএফ ও প্রিন্ট) */
+#voucherHost{position:fixed;left:-10000px;top:0;width:560px}
+.vch{width:560px;background:#fff;color:#1e293b;padding:26px 28px;font-size:14px;line-height:1.5}
+.vch .top{text-align:center;border-bottom:3px solid #059669;padding-bottom:10px;margin-bottom:12px}
+.vch .top h1{font-size:22px;color:#059669}
+.vch .top .t2{font-size:13px;color:#475569}
+.vch .meta{display:flex;justify-content:space-between;gap:10px;font-size:13px;margin-bottom:10px}
+.vch table{width:100%;border-collapse:collapse;margin-bottom:10px}
+.vch th{background:#ecfdf5;color:#065f46;font-size:12.5px;text-align:left;padding:6px;border:1px solid #d1fae5}
+.vch td{padding:6px;border:1px solid #e2e8f0;font-size:13px;vertical-align:top}
+.vch .r{text-align:right;white-space:nowrap}
+.vch .sum{margin-left:auto;width:100%}
+.vch .sum div{display:flex;justify-content:space-between;padding:4px 0;font-size:14px}
+.vch .sum .line{border-top:1px solid #cbd5e1;margin-top:3px;padding-top:7px}
+.vch .final{margin-top:8px;padding:10px 12px;border-radius:8px;display:flex;justify-content:space-between;font-weight:700;font-size:16px}
+.vch .final.due{background:#fee2e2;color:#b91c1c}
+.vch .final.adv{background:#dcfce7;color:#15803d}
+.vch .final.zero{background:#f1f5f9;color:#334155}
+.vch .foot{margin-top:16px;text-align:center;font-size:11.5px;color:#64748b;border-top:1px dashed #cbd5e1;padding-top:8px}
+.vch .empty-items{text-align:center;color:#94a3b8;padding:8px}
 </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header">
-    <h1 id="appTitle">দোকান বাকি ম্যানেজার</h1>
-    <p>সহজে বাকি হিসাব রাখুন ও হোয়াটসঅ্যাপে রসিদ পাঠান</p>
+    <h1>দোকান বাকি ম্যানেজার</h1>
+    <p>বাকি হিসাব রাখুন, বিল বানান ও পিডিএফ ভাউচার পাঠান</p>
     <div class="user-counter">📊 মোট অ্যাপ ব্যবহারকারী: <span id="userCount">…</span> জন</div>
   </div>
 
-  <form class="form-section" id="txForm" autocomplete="off">
+  <section class="form-section" aria-label="নতুন হিসাব">
     <div class="form-group">
-      <label class="t" for="shopName">দোকানদারের নাম</label>
-      <input type="text" id="shopName" class="form-control" placeholder="যেমন: রহিম স্টোর" list="shopList" required maxlength="60">
+      <label class="lbl" for="shopName">দোকানদারের নাম (যার কাছ থেকে কেনা)</label>
+      <input type="text" id="shopName" class="form-control" placeholder="যেমন: রহিম স্টোর" list="shopList" maxlength="60" autocomplete="off">
       <datalist id="shopList"></datalist>
     </div>
     <div class="form-group">
-      <label class="t" for="shopPhone">হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
-      <input type="tel" id="shopPhone" class="form-control" placeholder="যেমন: 01815643159" inputmode="tel" maxlength="20">
+      <label class="lbl" for="shopPhone">দোকানদারের হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
+      <input type="tel" id="shopPhone" class="form-control" placeholder="যেমন: 01815643159" inputmode="tel" maxlength="20" autocomplete="off">
     </div>
-    <div class="form-group">
-      <span class="t" style="display:block;font-size:.82rem;font-weight:600;margin-bottom:4px;color:#475569">লেনদেনের ধরন</span>
-      <div class="radio-group">
-        <label><input class="sr-only" type="radio" name="type" value="baki" checked><div class="radio-label baki">বাকি নিলাম (−)</div></label>
-        <label><input class="sr-only" type="radio" name="type" value="pari"><div class="radio-label pari">টাকা পরিশোধ (+)</div></label>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tabQuick" aria-selected="false" aria-controls="panelQuick" type="button">⚡ দ্রুত এন্ট্রি</button>
+      <button class="tab" role="tab" id="tabBill" aria-selected="true" aria-controls="panelBill" type="button">🧾 বিল ক্যালকুলেটর</button>
+    </div>
+
+    <!-- অপশন ১: দ্রুত এন্ট্রি -->
+    <form id="panelQuick" role="tabpanel" hidden autocomplete="off">
+      <div class="form-group">
+        <span class="lbl">লেনদেনের ধরন</span>
+        <div class="radio-group">
+          <label><input class="sr-only" type="radio" name="type" value="baki" checked><div class="radio-label baki">বাকি নিলাম (+)</div></label>
+          <label><input class="sr-only" type="radio" name="type" value="pari"><div class="radio-label pari">টাকা পরিশোধ (−)</div></label>
+        </div>
       </div>
+      <div class="form-group">
+        <label class="lbl" for="amount">টাকার পরিমাণ (৳)</label>
+        <input type="number" id="amount" class="form-control" placeholder="0" inputmode="decimal" min="0.01" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="lbl" for="desc">বিবরণ / পণ্যের তালিকা (ঐচ্ছিক)</label>
+        <input type="text" id="desc" class="form-control" placeholder="যেমন: চাল, তেল, ডাল" maxlength="120">
+      </div>
+      <button class="btn" type="submit">হিসেব যোগ করুন</button>
+    </form>
+
+    <!-- অপশন ২: বিল ক্যালকুলেটর -->
+    <div id="panelBill" role="tabpanel">
+      <div id="itemsWrap"></div>
+      <button class="addrow" id="btnAddRow" type="button">+ পণ্য যোগ করুন</button>
+      <datalist id="prodList"></datalist>
+
+      <div class="two">
+        <div class="form-group">
+          <label class="lbl" for="discount">ছাড় (৳)</label>
+          <input type="number" id="discount" class="form-control" placeholder="0" inputmode="decimal" min="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label class="lbl" for="paidNow">এখন জমা দিলাম (৳)</label>
+          <input type="number" id="paidNow" class="form-control" placeholder="0" inputmode="decimal" min="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="lbl" for="myName">আপনার নাম (ক্রেতা, ভাউচারে দেখাবে — ঐচ্ছিক)</label>
+        <input type="text" id="myName" class="form-control" maxlength="60" placeholder="যেমন: মোঃ করিম">
+      </div>
+
+      <div class="calc" id="calc" aria-live="polite"></div>
+      <button class="btn" id="btnComplete" type="button">✅ সর্বমোট লেনদেন সম্পন্ন করুন</button>
     </div>
-    <div class="form-group">
-      <label class="t" for="amount">টাকার পরিমাণ (৳)</label>
-      <input type="number" id="amount" class="form-control" placeholder="0" inputmode="decimal" min="0.01" step="0.01" required>
-    </div>
-    <div class="form-group">
-      <label class="t" for="desc">বিবরণ / পণ্যের তালিকা (ঐচ্ছিক)</label>
-      <input type="text" id="desc" class="form-control" placeholder="যেমন: চাল, তেল, ডাল" maxlength="120">
-    </div>
-    <button class="btn" type="submit">হিসেব যোগ করুন</button>
-  </form>
+  </section>
 
   <div class="summary"><span>সব দোকান মিলিয়ে মোট বাকি:</span><span class="total" id="totalBaki">৳ ০</span></div>
 
   <div class="list-section">
-    <div class="list-head">
+    <div class="form-group">
       <input type="search" id="search" class="form-control" placeholder="🔍 দোকানের নাম খুঁজুন" aria-label="দোকান খুঁজুন">
     </div>
     <div id="shopListWrap"></div>
@@ -127,31 +209,54 @@ input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset
 
 <div class="dev-footer">
   Developed with ❤️ by <strong id="devName"></strong> ·
-  <a id="devPhone" href="#"></a>
+  <a id="devPhone" href="#"></a><br>
+  <button type="button" id="btnInstall" class="inst" hidden>📲 অ্যাপ ইনস্টল করুন</button>
   <button type="button" id="btnShare">অ্যাপ শেয়ার করুন</button>
 </div>
 
+<dialog id="vDlg">
+  <h2 id="vTitle">ভাউচার প্রস্তুত</h2>
+  <p id="vInfo"></p>
+  <div class="stack">
+    <button class="btn" id="vDownload" type="button">⬇ পিডিএফ ডাউনলোড</button>
+    <button class="btn dark" id="vShare" type="button">📤 পিডিএফ শেয়ার করুন</button>
+    <button class="btn" id="vWa" type="button" style="background:#25d366">📲 হোয়াটসঅ্যাপে বার্তা পাঠান</button>
+    <button class="btn ghost" id="vPrint" type="button">🖨 প্রিন্ট</button>
+    <button class="btn ghost" id="vClose" type="button">বন্ধ করুন</button>
+  </div>
+</dialog>
+
+<div id="voucherHost" aria-hidden="true"></div>
+
+<script src="lib/html2canvas.min.js"></script>
+<script src="lib/jspdf.umd.min.js"></script>
 <script>
 /* ============ CONFIG (এক জায়গা থেকে সব বদলান) ============ */
 const CONFIG = {
   appName: 'দোকান বাকি ম্যানেজার',
   developer: 'MI Hossain',
   contactPhone: '01815643159',
-  gaId: 'G-XSFXC2MJBC',            // GA4 Measurement ID
+  gaId: 'G-XSFXC2MJBC',
   counterNs: 'mi_hossain_baki_app',
-  counterKey: 'users'
+  counterKey: 'users',
+  units: ['পিস', 'কেজি', 'গ্রাম', 'লিটার', 'ডজন', 'হালি', 'প্যাকেট', 'বোতল', 'বস্তা', 'মিটার']
 };
 const KEY = 'baki_manager_v2';
 const OLD_KEY = 'my_baki_manager_data_v1';
 const COUNTED = 'baki_counted';
+const COUNT_LAST = 'baki_count_last';
+const ME_KEY = 'baki_me';
 
 /* ============ Helpers ============ */
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const nf = new Intl.NumberFormat('bn-BD', { maximumFractionDigits: 2 });
-const money = p => '৳ ' + nf.format(p / 100);          // p = পয়সা (পূর্ণসংখ্যা)
+const money = p => '৳ ' + nf.format(p / 100);            // p = পয়সা (পূর্ণসংখ্যা)
 const fmtDate = ts => new Date(ts).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
-const keyOf = n => n.trim().toLowerCase();
+const keyOf = n => String(n || '').trim().toLowerCase();
+const toPaisa = v => { const n = parseFloat(v); return isFinite(n) && n > 0 ? Math.round(n * 100) : 0; };
+const lsGet = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 
 function normPhone(raw) {
   let p = String(raw || '').replace(/\D/g, '');
@@ -165,7 +270,7 @@ function normPhone(raw) {
 /* ============ Analytics (GA4) — শুধু ইভেন্ট, কোনো নাম/ফোন/টাকা নয় ============ */
 function initGA() {
   const id = CONFIG.gaId;
-  if (!/^G-[A-Z0-9]{6,}$/.test(id) || id === 'G-XXXXXXXXXX') return;
+  if (!/^G-[A-Z0-9]{6,}$/.test(id)) return;
   if (navigator.doNotTrack === '1') return;
   const s = document.createElement('script');
   s.async = true;
@@ -181,18 +286,22 @@ function track(evt, params = {}) { try { window.gtag && gtag('event', evt, param
 /* ============ User counter (প্রতি ব্রাউজারে একবারই গণনা) ============ */
 async function trackUsers() {
   const el = $('userCount');
+  const last = lsGet(COUNT_LAST);
+  if (last) el.textContent = nf.format(Number(last));
   const base = `https://api.counterapi.dev/v1/${CONFIG.counterNs}/${CONFIG.counterKey}`;
-  let first = false;
-  try { first = !localStorage.getItem(COUNTED); } catch (e) {}
+  const first = !lsGet(COUNTED);
   try {
     const res = await fetch(first ? base + '/up' : base);
     const data = await res.json();
+    if (!isFinite(Number(data.count))) throw new Error('bad');
     el.textContent = nf.format(Number(data.count));
-    if (first) try { localStorage.setItem(COUNTED, '1'); } catch (e) {}
-  } catch (e) { el.textContent = '—'; }
+    lsSet(COUNT_LAST, String(data.count));
+    if (first) lsSet(COUNTED, '1');
+  } catch (e) { if (!last) el.textContent = '—'; }
 }
 
 /* ============ Storage ============ */
+let meta = { vno: 0 };
 function migrate(r) {
   if (!r || !r.shopName || !(r.amount > 0)) return null;
   return { id: r.id || Date.now() + Math.random(), shop: String(r.shopName), phone: String(r.shopPhone || ''),
@@ -201,20 +310,23 @@ function migrate(r) {
 }
 function load() {
   try {
-    const raw = localStorage.getItem(KEY);
+    const raw = lsGet(KEY);
     if (raw) {
-      try { const d = JSON.parse(raw); if (Array.isArray(d.tx)) return d.tx; }
-      catch (e) { localStorage.setItem(KEY + '_corrupt', raw); }
+      try {
+        const d = JSON.parse(raw);
+        if (Array.isArray(d.tx)) { meta.vno = Number(d.vno) || 0; return d.tx; }
+      } catch (e) { lsSet(KEY + '_corrupt', raw); }
     }
-    const old = localStorage.getItem(OLD_KEY);
+    const old = lsGet(OLD_KEY);
     if (old) { const arr = JSON.parse(old); if (Array.isArray(arr)) return arr.map(migrate).filter(Boolean); }
   } catch (e) {}
   return [];
 }
 let tx = load();
+meta.vno = Math.max(meta.vno, ...tx.map(t => (t.voucher && t.voucher.vno) || 0), 0);
 let warned = false;
 function save() {
-  try { localStorage.setItem(KEY, JSON.stringify({ v: 2, tx })); }
+  try { localStorage.setItem(KEY, JSON.stringify({ v: 3, vno: meta.vno, tx })); }
   catch (e) { if (!warned) { warned = true; alert('ডেটা সংরক্ষণ করা যায়নি। প্রাইভেট মোডে থাকলে সাধারণ মোডে খুলুন।'); } }
 }
 
@@ -233,6 +345,15 @@ function groupShops() {
   for (const g of map.values()) g.list.sort((a, b) => b.ts - a.ts);
   return [...map.values()].sort((a, b) => b.last - a.last);
 }
+function balanceOf(shop) {
+  const k = keyOf(shop);
+  return tx.reduce((s, t) => keyOf(t.shop) === k ? s + (t.type === 'baki' ? t.paisa : -t.paisa) : s, 0);
+}
+function productMap() {
+  const m = new Map();
+  [...tx].sort((a, b) => a.ts - b.ts).forEach(t => (t.voucher && t.voucher.items || []).forEach(i => m.set(keyOf(i.name), { name: i.name, rate: i.rate, unit: i.unit })));
+  return m;
+}
 
 /* ============ Render ============ */
 function balView(b) {
@@ -242,12 +363,12 @@ function balView(b) {
 }
 function render() {
   const shops = groupShops();
-  const q = keyOf($('search').value || '');
+  const q = keyOf($('search').value);
   let total = 0;
   shops.forEach(s => { if (s.bal > 0) total += s.bal; });
   $('totalBaki').textContent = money(total);
-
   $('shopList').innerHTML = shops.map(s => `<option value="${esc(s.name)}">`).join('');
+  $('prodList').innerHTML = [...productMap().values()].map(p => `<option value="${esc(p.name)}">`).join('');
 
   const shown = shops.filter(s => !q || keyOf(s.name).includes(q));
   if (!shown.length) {
@@ -265,8 +386,11 @@ function render() {
       <div class="shop-body">
         ${s.list.map(t => `
           <div class="tx">
-            <div><div class="d">${fmtDate(t.ts)}</div>${t.desc ? `<div class="ds">${esc(t.desc)}</div>` : ''}
-              <button class="del" data-del="${esc(t.id)}" type="button">মুছুন</button></div>
+            <div><div class="d">${fmtDate(t.ts)}${t.voucher ? ' · ' + esc(vLabel(t.voucher)) : ''}</div>${t.desc ? `<div class="ds">${esc(t.desc)}</div>` : ''}
+              <div class="acts">
+                ${t.voucher ? `<button class="vc" data-vc="${esc(t.id)}" type="button">📄 ভাউচার</button>` : ''}
+                <button data-del="${esc(t.id)}" type="button">মুছুন</button>
+              </div></div>
             <div class="v ${t.type}">${t.type === 'baki' ? '+' : '−'} ${money(t.paisa)}<div class="ds">${t.type === 'baki' ? 'বাকি' : 'জমা'}</div></div>
           </div>`).join('')}
         ${s.phone ? `<button class="wa-btn" data-wa="${key}" type="button">📲 হোয়াটসঅ্যাপে হিসাব পাঠান</button>` : ''}
@@ -274,37 +398,253 @@ function render() {
     </details>`;
   }).join('');
 }
+const vLabel = v => 'ভাউচার ' + nf.format(v.vno).replace(/,/g, '');
 
-/* ============ Actions ============ */
-$('txForm').addEventListener('submit', e => {
+/* ============ Tabs ============ */
+function setTab(name) {
+  const quick = name === 'quick';
+  $('tabQuick').setAttribute('aria-selected', quick);
+  $('tabBill').setAttribute('aria-selected', !quick);
+  $('panelQuick').hidden = !quick;
+  $('panelBill').hidden = quick;
+  lsSet('baki_tab', name);
+  if (!quick) recalc();
+}
+$('tabQuick').onclick = () => setTab('quick');
+$('tabBill').onclick = () => setTab('bill');
+
+/* ============ অপশন ১: দ্রুত এন্ট্রি ============ */
+$('panelQuick').addEventListener('submit', e => {
   e.preventDefault();
   const shop = $('shopName').value.trim();
   const phone = $('shopPhone').value.trim();
   const type = document.querySelector('input[name="type"]:checked').value;
-  const amt = parseFloat($('amount').value);
+  const paisa = toPaisa($('amount').value);
   const desc = $('desc').value.trim();
-  if (!shop || !isFinite(amt) || amt <= 0) { alert('অনুগ্রহ করে দোকানদারের নাম এবং সঠিক টাকার পরিমাণ লিখুন!'); return; }
-  tx.unshift({ id: Date.now() + Math.random().toString(36).slice(2, 6), shop, phone, type,
-               paisa: Math.round(amt * 100), desc, ts: Date.now() });
-  save(); render();
-  track('add_transaction', { type });
+  if (!shop || !paisa) { alert('অনুগ্রহ করে দোকানদারের নাম এবং সঠিক টাকার পরিমাণ লিখুন!'); return; }
+  tx.unshift({ id: newId(), shop, phone, type, paisa, desc, ts: Date.now() });
+  save(); render(); recalc();
+  track('add_transaction', { type, mode: 'quick' });
   $('amount').value = ''; $('desc').value = ''; $('amount').focus();
 });
+const newId = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 $('shopName').addEventListener('change', () => {
   const g = groupShops().find(s => keyOf(s.name) === keyOf($('shopName').value));
   if (g && g.phone && !$('shopPhone').value) $('shopPhone').value = g.phone;
+  recalc();
 });
-$('search').addEventListener('input', render);
+$('shopName').addEventListener('input', recalc);
 
+/* ============ অপশন ২: বিল ক্যালকুলেটর ============ */
+function addRow(data = {}) {
+  const d = document.createElement('div');
+  d.className = 'item';
+  d.innerHTML = `
+    <div class="r1">
+      <input class="form-control i-name" type="text" placeholder="পণ্যের নাম (যেমন: চাল)" list="prodList" maxlength="50" aria-label="পণ্যের নাম" value="${esc(data.name || '')}">
+      <button class="rm" type="button" aria-label="সারি মুছুন">✕</button>
+    </div>
+    <div class="r2">
+      <div><span class="lbl">পরিমাণ</span><input class="form-control i-qty" type="number" inputmode="decimal" min="0" step="any" placeholder="0" value="${esc(data.qty ?? '')}"></div>
+      <div><span class="lbl">একক</span><select class="form-control i-unit">${CONFIG.units.map(u => `<option${u === (data.unit || 'পিস') ? ' selected' : ''}>${u}</option>`).join('')}</select></div>
+      <div><span class="lbl">দর (৳)</span><input class="form-control i-rate" type="number" inputmode="decimal" min="0" step="any" placeholder="0" value="${esc(data.rate ?? '')}"></div>
+    </div>
+    <div class="rowtot">মোট: <span class="i-tot">৳ ০</span></div>`;
+  $('itemsWrap').appendChild(d);
+  return d;
+}
+function readItems() {
+  return [...document.querySelectorAll('#itemsWrap .item')].map(r => {
+    const name = r.querySelector('.i-name').value.trim();
+    const qraw = r.querySelector('.i-qty').value, rraw = r.querySelector('.i-rate').value;
+    const qty = parseFloat(qraw), rate = parseFloat(rraw);
+    const filled = !!(name || qraw || rraw);
+    const ok = !!name && qty > 0 && rate > 0;
+    return { row: r, filled, ok, name, qty, rate, unit: r.querySelector('.i-unit').value,
+             paisa: ok ? Math.round(qty * rate * 100) : 0 };
+  });
+}
+function calcState() {
+  const rows = readItems();
+  const subtotal = rows.reduce((s, r) => s + r.paisa, 0);
+  const discount = Math.min(toPaisa($('discount').value), subtotal);
+  const total = subtotal - discount;
+  const prev = $('shopName').value.trim() ? balanceOf($('shopName').value) : 0;
+  const paid = toPaisa($('paidNow').value);
+  const grand = prev + total;
+  const remaining = grand - paid;
+  return { rows, subtotal, discount, total, prev, paid, grand, remaining };
+}
+function recalc() {
+  const c = calcState();
+  c.rows.forEach(r => { r.row.querySelector('.i-tot').textContent = money(r.paisa); });
+  const prevLine = c.prev >= 0 ? ['আগের বাকি', money(c.prev)] : ['আগের অগ্রিম জমা', '− ' + money(-c.prev)];
+  const fin = balView(c.remaining);
+  $('calc').innerHTML = `
+    <div><span>পণ্যের মোট</span><span>${money(c.subtotal)}</span></div>
+    ${c.discount ? `<div><span>ছাড়</span><span>− ${money(c.discount)}</span></div>` : ''}
+    <div><span>এই বিলের মোট</span><b>${money(c.total)}</b></div>
+    <div><span>${prevLine[0]}</span><span>${prevLine[1]}</span></div>
+    <div><span>জমা</span><span>− ${money(c.paid)}</span></div>
+    <div class="big ${fin.cls}"><span>${c.remaining > 0 ? 'অবশিষ্ট বাকি' : c.remaining < 0 ? 'অগ্রিম জমা' : 'সম্পূর্ণ পরিশোধিত'}</span><span>${money(Math.abs(c.remaining))}</span></div>`;
+}
+$('btnAddRow').onclick = () => { addRow().querySelector('.i-name').focus(); recalc(); };
+$('panelBill').addEventListener('input', e => {
+  if (e.target.classList.contains('i-name')) {
+    const p = productMap().get(keyOf(e.target.value));
+    const row = e.target.closest('.item');
+    if (p && row && !row.querySelector('.i-rate').value) {
+      row.querySelector('.i-rate').value = p.rate;
+      row.querySelector('.i-unit').value = p.unit;
+    }
+  }
+  recalc();
+});
+$('panelBill').addEventListener('change', recalc);
+$('panelBill').addEventListener('click', e => {
+  const rm = e.target.closest('.rm');
+  if (!rm) return;
+  const rows = document.querySelectorAll('#itemsWrap .item');
+  if (rows.length > 1) rm.closest('.item').remove(); else rm.closest('.item').querySelectorAll('input').forEach(i => i.value = '');
+  recalc();
+});
+$('myName').value = lsGet(ME_KEY) || '';
+$('myName').addEventListener('change', () => lsSet(ME_KEY, $('myName').value.trim()));
+
+$('btnComplete').onclick = async () => {
+  const shop = $('shopName').value.trim();
+  const phone = $('shopPhone').value.trim();
+  if (!shop) { alert('অনুগ্রহ করে দোকানদারের নাম লিখুন!'); $('shopName').focus(); return; }
+  const c = calcState();
+  const bad = c.rows.find(r => r.filled && !r.ok);
+  if (bad) { alert('একটি পণ্যের তথ্য অসম্পূর্ণ। নাম, পরিমাণ ও দর সবগুলো দিন, অথবা সারিটি মুছে দিন।'); bad.row.querySelector('.i-name').focus(); return; }
+  const items = c.rows.filter(r => r.ok).map(r => ({ name: r.name, qty: r.qty, unit: r.unit, rate: r.rate, paisa: r.paisa }));
+  if (!items.length && !c.paid) { alert('অন্তত একটি পণ্য অথবা জমার পরিমাণ দিন।'); return; }
+
+  const ts = Date.now();
+  const billId = 'B' + newId();
+  const vno = ++meta.vno;
+  const me = $('myName').value.trim();
+  lsSet(ME_KEY, me);
+  const v = { vno, ts, billId, shop, shopPhone: phone, me, items, subtotal: c.subtotal, discount: c.discount,
+              total: c.total, prev: c.prev, paid: c.paid, remaining: c.remaining };
+  const summary = items.map(i => i.name).join(', ');
+  if (items.length) tx.unshift({ id: newId(), shop, phone, type: 'baki', paisa: c.total, desc: summary, ts, billId, voucher: v });
+  if (c.paid) tx.unshift({ id: newId(), shop, phone, type: 'pari', paisa: c.paid, desc: 'বিলের সাথে জমা', ts: ts + 1, billId, voucher: items.length ? undefined : v });
+  save(); render();
+  track('bill_complete', { items: items.length, with_payment: c.paid > 0 });
+
+  // ফর্ম পরিষ্কার
+  $('itemsWrap').innerHTML = ''; addRow();
+  $('discount').value = ''; $('paidNow').value = '';
+  recalc();
+  openVoucher(v);
+};
+
+/* ============ ভাউচার ============ */
+function voucherHTML(v) {
+  const rows = v.items.length ? v.items.map((i, n) => `<tr><td>${nf.format(n + 1)}</td><td>${esc(i.name)}</td><td class="r">${nf.format(i.qty)} ${esc(i.unit)}</td><td class="r">${nf.format(i.rate)}</td><td class="r">${money(i.paisa)}</td></tr>`).join('')
+    : `<tr><td colspan="5" class="empty-items">কোনো পণ্য নেই — শুধু জমা</td></tr>`;
+  const fin = balView(v.remaining);
+  const prevRow = v.prev >= 0 ? `<div><span>(+) আগের বাকি</span><span>${money(v.prev)}</span></div>` : `<div><span>(−) আগের অগ্রিম জমা</span><span>${money(-v.prev)}</span></div>`;
+  const grand = v.prev + v.total;
+  return `<div class="vch">
+    <div class="top"><h1>${esc(v.shop)}</h1>${v.shopPhone ? `<div class="t2">ফোন: ${esc(v.shopPhone)}</div>` : ''}<div class="t2">বাকি মেমো / ক্রয় ভাউচার</div></div>
+    <div class="meta"><div>ভাউচার নং: <b>${esc(nf.format(v.vno).replace(/,/g, ''))}</b>${v.me ? `<br>ক্রেতা: <b>${esc(v.me)}</b>` : ''}</div><div style="text-align:right">তারিখ: <b>${fmtDate(v.ts)}</b><br>সময়: ${new Date(v.ts).toLocaleTimeString('bn-BD', { hour: 'numeric', minute: '2-digit' })}</div></div>
+    <table><thead><tr><th>ক্র.</th><th>পণ্য</th><th class="r">পরিমাণ</th><th class="r">দর</th><th class="r">টাকা</th></tr></thead><tbody>${rows}</tbody></table>
+    <div class="sum">
+      ${v.discount ? `<div><span>পণ্যের মোট</span><span>${money(v.subtotal)}</span></div><div><span>(−) ছাড়</span><span>${money(v.discount)}</span></div>` : ''}
+      <div><span>এই বিলের মোট</span><b>${money(v.total)}</b></div>
+      ${prevRow}
+      <div class="line"><span>${grand >= 0 ? 'মোট পরিশোধযোগ্য' : 'সমন্বয়ের পর অগ্রিম'}</span><b>${money(Math.abs(grand))}</b></div>
+      <div><span>(−) এখন জমা</span><span>${money(v.paid)}</span></div>
+    </div>
+    <div class="final ${fin.cls}"><span>${v.remaining > 0 ? 'অবশিষ্ট বাকি' : v.remaining < 0 ? 'অগ্রিম জমা' : 'সম্পূর্ণ পরিশোধিত'}</span><span>${money(Math.abs(v.remaining))}</span></div>
+    <div class="foot">${esc(CONFIG.appName)} · Developed by ${esc(CONFIG.developer)} · ${esc(CONFIG.contactPhone)}</div>
+  </div>`;
+}
+
+let curV = null, curBlob = null;
+function pdfName(v) { return `voucher-${String(v.vno).padStart(4, '0')}-${new Date(v.ts).toISOString().slice(0, 10)}.pdf`; }
+
+async function makePdf(v) {
+  if (!window.html2canvas || !window.jspdf) throw new Error('lib missing');
+  const host = $('voucherHost');
+  host.innerHTML = voucherHTML(v);
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
+  const canvas = await html2canvas(host.firstElementChild, { scale: 2, backgroundColor: '#ffffff' });
+  const { jsPDF } = window.jspdf;
+  const w = 148, imgH = canvas.height * w / canvas.width, h = Math.max(210, imgH);
+  const pdf = new jsPDF({ unit: 'mm', format: [w, h], orientation: 'portrait' });
+  pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, w, imgH);
+  host.innerHTML = '';
+  return pdf.output('blob');
+}
+function openVoucher(v) {
+  curV = v; curBlob = null;
+  $('vTitle').textContent = 'ভাউচার ' + nf.format(v.vno).replace(/,/g, '') + ' প্রস্তুত';
+  const fin = balView(v.remaining);
+  $('vInfo').textContent = `${v.shop} · ${fin.label}: ${fin.txt}`;
+  const dlg = $('vDlg');
+  if (dlg.showModal) { if (!dlg.open) dlg.showModal(); } else dlg.setAttribute('open', '');
+  $('vShare').hidden = !(navigator.canShare && navigator.share);
+  $('vWa').hidden = !normPhone(v.shopPhone);
+}
+async function ensurePdf() {
+  if (curBlob) return curBlob;
+  const b = $('vDownload'); const old = b.textContent; b.disabled = true; b.textContent = 'পিডিএফ তৈরি হচ্ছে…';
+  try { curBlob = await makePdf(curV); return curBlob; }
+  finally { b.disabled = false; b.textContent = old; }
+}
+function printVoucher(v) {
+  const w = window.open('', '_blank');
+  if (!w) { alert('প্রিন্ট উইন্ডো খোলা যায়নি। পপ-আপ অনুমতি দিন।'); return; }
+  const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\n');
+  w.document.write(`<!doctype html><html lang="bn"><head><meta charset="utf-8"><title>${esc(pdfName(v))}</title><style>${css}\nbody{padding:0;background:#fff}.vch{margin:0 auto}</style></head><body>${voucherHTML(v)}</body></html>`);
+  w.document.close(); w.focus(); setTimeout(() => w.print(), 400);
+}
+$('vDownload').onclick = async () => {
+  try {
+    const blob = await ensurePdf();
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = pdfName(curV);
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    track('voucher_pdf');
+  } catch (e) { alert('পিডিএফ তৈরি করা যায়নি। প্রিন্ট বাটন দিয়ে "Save as PDF" করুন।'); }
+};
+$('vShare').onclick = async () => {
+  try {
+    const blob = await ensurePdf();
+    const file = new File([blob], pdfName(curV), { type: 'application/pdf' });
+    if (navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: 'বাকি ভাউচার' }); track('voucher_share'); }
+    else alert('এই ডিভাইসে ফাইল শেয়ার সম্ভব নয়। ডাউনলোড করে পাঠান।');
+  } catch (e) { if (e && e.name !== 'AbortError') alert('শেয়ার করা যায়নি। ডাউনলোড করে পাঠান।'); }
+};
+$('vWa').onclick = () => {
+  const v = curV, phone = normPhone(v.shopPhone), fin = balView(v.remaining);
+  const lines = v.items.map(i => `• ${i.name} — ${nf.format(i.qty)} ${i.unit} × ${nf.format(i.rate)} = ${money(i.paisa)}`).join('\n');
+  const msg = `আসসালামু আলাইকুম ${v.shop} ভাই,\n\nভাউচার নং ${nf.format(v.vno).replace(/,/g, '')} (${fmtDate(v.ts)})\n${lines ? lines + '\n' : ''}\nএই বিলের মোট: ${money(v.total)}\nজমা: ${money(v.paid)}\n${v.remaining > 0 ? 'অবশিষ্ট বাকি' : v.remaining < 0 ? 'অগ্রিম জমা' : 'অবস্থা'}: ${v.remaining === 0 ? 'সম্পূর্ণ পরিশোধিত' : money(Math.abs(v.remaining))}\n\nধন্যবাদ।${v.me ? '\n— ' + v.me : ''}\n(${CONFIG.appName})`;
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  track('whatsapp_share', { kind: 'voucher' });
+};
+$('vPrint').onclick = () => { printVoucher(curV); track('voucher_print'); };
+$('vClose').onclick = () => { const d = $('vDlg'); d.close ? d.close() : d.removeAttribute('open'); };
+
+/* ============ তালিকা ক্লিক ============ */
+$('search').addEventListener('input', render);
 $('shopListWrap').addEventListener('click', e => {
   const del = e.target.closest('[data-del]');
   if (del) {
-    if (!confirm('এই লেনদেনটি মুছে ফেলবেন?')) return;
-    tx = tx.filter(t => String(t.id) !== del.dataset.del);
-    save(); render(); track('delete_transaction');
+    const t = tx.find(x => String(x.id) === del.dataset.del);
+    if (!t) return;
+    const related = t.billId ? tx.filter(x => x.billId === t.billId).length : 1;
+    if (!confirm(related > 1 ? 'এই বিলের সব লেনদেন (বাকি ও জমা) একসাথে মুছে যাবে। চালিয়ে যাবেন?' : 'এই লেনদেনটি মুছে ফেলবেন?')) return;
+    tx = t.billId ? tx.filter(x => x.billId !== t.billId) : tx.filter(x => x !== t);
+    save(); render(); recalc(); track('delete_transaction');
     return;
   }
+  const vc = e.target.closest('[data-vc]');
+  if (vc) { const t = tx.find(x => String(x.id) === vc.dataset.vc); if (t && t.voucher) openVoucher(t.voucher); return; }
   const wa = e.target.closest('[data-wa]');
   if (wa) sendWhatsApp(wa.dataset.wa);
 });
@@ -319,7 +659,7 @@ function sendWhatsApp(shopKey) {
   const act = t.type === 'baki' ? `৳${nf.format(t.paisa / 100)} বাকি নেওয়া হলো` : `৳${nf.format(t.paisa / 100)} পরিশোধ করা হলো`;
   const msg = `আসসালামু আলাইকুম ${g.name} ভাই,\n\n${fmtDate(t.ts)} তারিখে আপনার হিসাবে ${act}।\nবিবরণ: ${t.desc || 'নাই'}\n\nবর্তমান মোট ${b.label}: ${b.txt}\n\nধন্যবাদ।\n(${CONFIG.appName} থেকে প্রেরিত)`;
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
-  track('whatsapp_share');
+  track('whatsapp_share', { kind: 'summary' });
 }
 
 /* ============ Backup / Restore ============ */
@@ -332,7 +672,7 @@ function download(name, text, type) {
 const stamp = () => new Date().toISOString().slice(0, 10);
 $('btnExport').onclick = () => {
   if (!tx.length) { alert('ব্যাকআপ নেওয়ার মতো কোনো ডেটা নেই।'); return; }
-  download(`baki-backup-${stamp()}.json`, JSON.stringify({ v: 2, tx }, null, 1), 'application/json');
+  download(`baki-backup-${stamp()}.json`, JSON.stringify({ v: 3, vno: meta.vno, tx }, null, 1), 'application/json');
   track('export_backup', { format: 'json' });
 };
 $('btnCsv').onclick = () => {
@@ -341,7 +681,7 @@ $('btnCsv').onclick = () => {
   const rows = [['তারিখ', 'দোকান', 'ফোন', 'ধরন', 'টাকা', 'বিবরণ'].map(q).join(',')];
   [...tx].sort((a, b) => a.ts - b.ts).forEach(t => rows.push([
     new Date(t.ts).toISOString().slice(0, 10), t.shop, t.phone, t.type === 'baki' ? 'বাকি' : 'জমা', t.paisa / 100, t.desc].map(q).join(',')));
-  download(`baki-${stamp()}.csv`, '\ufeff' + rows.join('\n'), 'text/csv;charset=utf-8');
+  download(`baki-${stamp()}.csv`, '﻿' + rows.join('\n'), 'text/csv;charset=utf-8');
   track('export_backup', { format: 'csv' });
 };
 $('btnImport').onclick = () => $('importFile').click();
@@ -351,30 +691,59 @@ $('importFile').onchange = async e => {
   try {
     const d = JSON.parse(await f.text());
     const incoming = (Array.isArray(d.tx) ? d.tx : []).filter(t => t && t.shop && t.paisa > 0 && (t.type === 'baki' || t.type === 'pari'))
-      .map(t => ({ id: t.id ?? Date.now() + Math.random().toString(36).slice(2, 6), shop: String(t.shop), phone: String(t.phone || ''),
-                   type: t.type, paisa: Math.round(t.paisa), desc: String(t.desc || ''), ts: Number(t.ts) || Date.now() }));
+      .map(t => ({ id: t.id ?? newId(), shop: String(t.shop), phone: String(t.phone || ''), type: t.type,
+                   paisa: Math.round(t.paisa), desc: String(t.desc || ''), ts: Number(t.ts) || Date.now(),
+                   ...(t.billId ? { billId: String(t.billId) } : {}), ...(t.voucher && typeof t.voucher === 'object' ? { voucher: t.voucher } : {}) }));
     if (!incoming.length) { alert('ফাইলে কোনো সঠিক ডেটা পাওয়া যায়নি।'); return; }
     const have = new Set(tx.map(t => String(t.id)));
     const fresh = incoming.filter(t => !have.has(String(t.id)));
     if (!confirm(`${nf.format(fresh.length)} টি নতুন লেনদেন যোগ করা হবে। চালিয়ে যাবেন?`)) return;
-    tx = tx.concat(fresh); save(); render(); track('import_backup');
+    tx = tx.concat(fresh);
+    meta.vno = Math.max(meta.vno, Number(d.vno) || 0, ...tx.map(t => (t.voucher && t.voucher.vno) || 0));
+    save(); render(); recalc(); track('import_backup');
   } catch (err) { alert('ফাইলটি পড়া যায়নি। সঠিক ব্যাকআপ ফাইল দিন।'); }
 };
 
-/* ============ Credit & share ============ */
+/* ============ Credit, share, install ============ */
 $('devName').textContent = CONFIG.developer;
 $('devPhone').textContent = 'Contact: ' + CONFIG.contactPhone;
 $('devPhone').href = 'tel:' + CONFIG.contactPhone;
 $('devPhone').addEventListener('click', () => track('contact_click'));
 $('btnShare').onclick = async () => {
-  const data = { title: CONFIG.appName, text: 'সহজে দোকানের বাকি হিসাব রাখুন:', url: location.href };
-  try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(location.href); alert('লিংক কপি হয়েছে।'); } track('share_app'); } catch (e) {}
+  const data = { title: CONFIG.appName, text: 'সহজে দোকানের বাকি হিসাব রাখুন:', url: location.href.split('#')[0] };
+  try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(data.url); alert('লিংক কপি হয়েছে।'); } track('share_app'); } catch (e) {}
 };
 
+let deferredInstall = null;
+const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; if (!isStandalone()) $('btnInstall').hidden = false; });
+window.addEventListener('appinstalled', () => { $('btnInstall').hidden = true; deferredInstall = null; track('pwa_install'); });
+if (isIOS && !isStandalone()) $('btnInstall').hidden = false;
+$('btnInstall').onclick = async () => {
+  track('install_click');
+  if (deferredInstall) {
+    deferredInstall.prompt();
+    try { await deferredInstall.userChoice; } catch (e) {}
+    deferredInstall = null; $('btnInstall').hidden = true;
+  } else if (isIOS) {
+    alert('iPhone-এ ইনস্টল করতে: Safari-র নিচের Share (⬆) বাটনে চাপুন → "Add to Home Screen" বেছে নিন।\n\nগুরুত্বপূর্ণ: ইনস্টল করা অ্যাপের ডেটা Safari থেকে আলাদা। আগে থেকে হিসাব থাকলে ব্যাকআপ নিয়ে নতুন অ্যাপে রিস্টোর করুন।');
+  } else {
+    alert('ব্রাউজারের মেনু থেকে "Install app" বা "Add to Home screen" বেছে নিন।');
+  }
+};
+
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+
 /* ============ Start ============ */
+addRow();
+setTab(lsGet('baki_tab') === 'quick' ? 'quick' : 'bill');
 initGA();
 trackUsers();
 render();
+recalc();
 </script>
 </body>
 </html>
