@@ -1,5 +1,5 @@
 /* দোকান বাকি ম্যানেজার — অফলাইন সার্ভিস ওয়ার্কার */
-const CACHE = 'baki-v4';
+const CACHE = 'baki-v5';
 const CORE = [
   './',
   './index.html',

@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>দোকান বাকি ম্যানেজার</title>
-<meta name="description" content="সহজে দোকানের বাকি হিসাব রাখুন, বিল তৈরি করুন এবং পিডিএফ ভাউচার পাঠান। আপনার হিসাব শুধু আপনার ফোনেই থাকে।">
+<meta name="description" content="ক্রেতা ও দোকানদার উভয়ের জন্য বাকি হিসাব, বিল ক্যালকুলেটর ও পিডিএফ ভাউচার। আপনার হিসাব শুধু আপনার ফোনেই থাকে।">
 <meta name="theme-color" content="#059669">
 <meta property="og:type" content="website">
 <meta property="og:title" content="দোকান বাকি ম্যানেজার">
-<meta property="og:description" content="সহজে বাকি হিসাব রাখুন, বিল তৈরি করুন ও পিডিএফ ভাউচার পাঠান।">
+<meta property="og:description" content="বাকি হিসাব রাখুন, বিল বানান ও পিডিএফ ভাউচার পাঠান।">
 <!-- <meta property="og:image" content="https://YOUR-DOMAIN/icons/icon-512.png"> -->
 <!-- <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
 <link rel="manifest" href="manifest.webmanifest">
@@ -29,6 +29,12 @@ button,input,select,textarea{font-family:inherit}
 .header h1{font-size:1.35rem;margin-bottom:4px}
 .header p{font-size:.85rem;opacity:.92}
 .user-counter{background:rgba(255,255,255,.2);display:inline-block;padding:4px 12px;border-radius:20px;font-size:.78rem;margin-top:8px}
+.modebar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:12px 16px 0}
+.seg{display:flex;flex:1;min-width:230px;background:#f1f5f9;padding:4px;border-radius:10px;gap:4px}
+.seg button{flex:1;border:none;background:none;padding:8px 4px;border-radius:8px;font-size:.82rem;font-weight:700;color:var(--muted);cursor:pointer;line-height:1.25}
+.seg button small{display:block;font-size:.66rem;font-weight:500}
+.seg button[aria-selected="true"]{background:#fff;color:var(--primary-dark);box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.mini{border:1px solid var(--primary);background:#ecfdf5;color:var(--primary-dark);border-radius:8px;padding:8px 10px;font-size:.76rem;font-weight:700;cursor:pointer}
 .form-section{padding:16px;border-bottom:1px solid var(--line)}
 .form-group{margin-bottom:12px}
 .lbl{display:block;font-size:.82rem;font-weight:600;margin-bottom:4px;color:#475569}
@@ -62,8 +68,10 @@ input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset
 .calc .big{font-weight:700;font-size:1rem;border-top:1px solid var(--line);margin-top:4px;padding-top:7px}
 .calc .due{color:var(--danger)}.calc .adv{color:var(--success)}
 .calc .words{display:block;font-size:.76rem;color:var(--muted);padding-top:2px;text-align:right}
+.calc .warn{color:var(--danger);font-weight:700}
 .summary{display:flex;justify-content:space-between;padding:12px 16px;background:#f1f5f9;font-weight:700;font-size:.92rem}
 .summary .total{color:var(--danger)}
+.odbar{padding:8px 16px;background:#fef2f2;color:#b91c1c;font-size:.82rem;font-weight:700;border-bottom:1px solid #fecaca}
 .banner{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:#fffbeb;border-bottom:1px solid #fde68a;color:#92400e;padding:10px 16px;font-size:.82rem}
 .banner span{flex:1;min-width:55%}
 .banner button{border:none;border-radius:6px;padding:7px 10px;font-size:.78rem;font-weight:700;cursor:pointer}
@@ -74,6 +82,9 @@ input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset
 .shop summary::-webkit-details-marker{display:none}
 .shop .name{font-weight:700;font-size:.95rem}
 .shop .sub{font-size:.75rem;color:#94a3b8}
+.shop .badges{margin-top:3px;display:flex;gap:6px;flex-wrap:wrap}
+.od{background:#fee2e2;color:#b91c1c;border-radius:6px;padding:2px 7px;font-size:.7rem;font-weight:700}
+.nd{background:#e0f2fe;color:#0369a1;border-radius:6px;padding:2px 7px;font-size:.7rem;font-weight:700}
 .bal{text-align:right;font-weight:700}
 .bal small{display:block;font-size:.72rem;font-weight:600}
 .bal.due{color:var(--danger)}.bal.adv{color:var(--success)}.bal.zero{color:var(--muted)}
@@ -91,7 +102,7 @@ input:focus-visible+.radio-label{outline:2px solid var(--primary);outline-offset
 .tx .acts button.ed{color:#0369a1}
 .shop-acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
 .wa-btn{display:inline-flex;align-items:center;gap:4px;background:#25d366;color:#fff;border:none;padding:7px 12px;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer}
-.wa-btn.st{background:#0ea5e9}.wa-btn.rn{background:#64748b}
+.wa-btn.st{background:#0ea5e9}.wa-btn.rn{background:#64748b}.wa-btn.rm2{background:#f59e0b}
 .tools{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 16px 16px}
 .empty{text-align:center;color:#94a3b8;font-size:.85rem;padding:10px}
 .privacy{font-size:.74rem;color:var(--muted);text-align:center;padding:0 16px 14px}
@@ -108,7 +119,7 @@ dialog .stack{display:grid;gap:8px}
 dialog .fld{margin-bottom:10px}
 #toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#1e293b;color:#fff;padding:10px 14px;border-radius:10px;font-size:.85rem;display:flex;gap:14px;align-items:center;z-index:50;box-shadow:0 6px 20px rgba(0,0,0,.3);max-width:92vw}
 #toast button{background:none;border:none;color:#6ee7b7;font-weight:700;cursor:pointer;font-size:.85rem;white-space:nowrap}
-/* ভাউচার ও স্টেটমেন্ট (পিডিএফ ও প্রিন্ট) */
+/* ভাউচার, স্টেটমেন্ট ও বকেয়া তালিকা (পিডিএফ ও প্রিন্ট) */
 #voucherHost{position:fixed;left:-10000px;top:0;width:616px}
 .vch{width:560px;background:#fff;color:#1e293b;padding:26px 28px;font-size:14px;line-height:1.5}
 .vch .top{text-align:center;border-bottom:3px solid #059669;padding-bottom:10px;margin-bottom:12px}
@@ -135,6 +146,7 @@ dialog .fld{margin-bottom:10px}
 .vch.pg td{height:30px;line-height:30px;padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .vch.pg .pgfoot{margin-top:auto;text-align:center;font-size:11px;color:#64748b;border-top:1px dashed #cbd5e1;padding-top:6px}
 .vch.pg tr.open td{background:#f8fafc;font-weight:700}
+.vch.pg td.late{color:#b91c1c;font-weight:700}
 </style>
 </head>
 <body>
@@ -142,18 +154,26 @@ dialog .fld{margin-bottom:10px}
 <div class="container">
   <div class="header">
     <h1>দোকান বাকি ম্যানেজার</h1>
-    <p>বাকি হিসাব রাখুন, বিল বানান ও পিডিএফ ভাউচার পাঠান</p>
+    <p id="hdrSub"></p>
     <div class="user-counter">📊 মোট অ্যাপ ব্যবহারকারী: <span id="userCount">…</span> জন</div>
+  </div>
+
+  <div class="modebar">
+    <div class="seg" role="tablist" aria-label="মোড">
+      <button id="modeBuyer" type="button" role="tab" aria-selected="true">🛒 ক্রেতা<small>আমি কিনি, বাকি রাখি</small></button>
+      <button id="modeSeller" type="button" role="tab" aria-selected="false">🏪 দোকানদার<small>আমি বিক্রি করি</small></button>
+    </div>
+    <button class="mini" id="btnProfile" type="button" data-for="seller" hidden>⚙ আমার দোকানের তথ্য</button>
   </div>
 
   <section class="form-section" aria-label="নতুন হিসাব">
     <div class="form-group">
-      <label class="lbl" for="shopName">দোকানদারের নাম (যার কাছ থেকে কেনা)</label>
+      <label class="lbl" for="shopName" id="lblShopName">দোকানদারের নাম</label>
       <input type="text" id="shopName" class="form-control" placeholder="যেমন: রহিম স্টোর" list="shopList" maxlength="60" autocomplete="off">
       <datalist id="shopList"></datalist>
     </div>
     <div class="form-group">
-      <label class="lbl" for="shopPhone">দোকানদারের হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
+      <label class="lbl" for="shopPhone" id="lblShopPhone">দোকানদারের হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)</label>
       <input type="tel" id="shopPhone" class="form-control" placeholder="যেমন: 01815643159" inputmode="tel" maxlength="20" autocomplete="off">
     </div>
 
@@ -167,8 +187,8 @@ dialog .fld{margin-bottom:10px}
       <div class="form-group">
         <span class="lbl">লেনদেনের ধরন</span>
         <div class="radio-group">
-          <label><input class="sr-only" type="radio" name="type" value="baki" checked><div class="radio-label baki">বাকি নিলাম (+)</div></label>
-          <label><input class="sr-only" type="radio" name="type" value="pari"><div class="radio-label pari">টাকা পরিশোধ (−)</div></label>
+          <label><input class="sr-only" type="radio" name="type" value="baki" checked><div class="radio-label baki" id="lblAdd">বাকি নিলাম (+)</div></label>
+          <label><input class="sr-only" type="radio" name="type" value="pari"><div class="radio-label pari" id="lblPay">টাকা পরিশোধ (−)</div></label>
         </div>
       </div>
       <div class="form-group">
@@ -178,6 +198,10 @@ dialog .fld{margin-bottom:10px}
       <div class="form-group">
         <label class="lbl" for="desc">বিবরণ / পণ্যের তালিকা (ঐচ্ছিক)</label>
         <input type="text" id="desc" class="form-control" placeholder="যেমন: চাল, তেল, ডাল" maxlength="120">
+      </div>
+      <div class="form-group" data-for="seller" hidden>
+        <label class="lbl" for="qDue">পরিশোধের প্রতিশ্রুত তারিখ (ঐচ্ছিক)</label>
+        <input type="date" id="qDue" class="form-control">
       </div>
       <button class="btn" type="submit">হিসেব যোগ করুন</button>
     </form>
@@ -194,7 +218,7 @@ dialog .fld{margin-bottom:10px}
           <input type="number" id="discount" class="form-control" placeholder="0" inputmode="decimal" min="0" step="0.01">
         </div>
         <div class="form-group">
-          <label class="lbl" for="paidNow">এখন জমা দিলাম (৳)</label>
+          <label class="lbl" for="paidNow" id="lblPaid">এখন জমা দিলাম (৳)</label>
           <input type="number" id="paidNow" class="form-control" placeholder="0" inputmode="decimal" min="0" step="0.01">
         </div>
       </div>
@@ -210,7 +234,11 @@ dialog .fld{margin-bottom:10px}
           <input type="text" id="payRef" class="form-control" maxlength="30" placeholder="ঐচ্ছিক" autocomplete="off">
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" data-for="seller" hidden>
+        <label class="lbl" for="bDue">বাকির পরিশোধের প্রতিশ্রুত তারিখ (ঐচ্ছিক)</label>
+        <input type="date" id="bDue" class="form-control">
+      </div>
+      <div class="form-group" data-for="buyer">
         <label class="lbl" for="myName">আপনার নাম (ক্রেতা, ভাউচারে দেখাবে — ঐচ্ছিক)</label>
         <input type="text" id="myName" class="form-control" maxlength="60" placeholder="যেমন: মোঃ করিম">
       </div>
@@ -220,7 +248,8 @@ dialog .fld{margin-bottom:10px}
     </div>
   </section>
 
-  <div class="summary"><span>সব দোকান মিলিয়ে মোট বাকি:</span><span class="total" id="totalBaki">৳ ০</span></div>
+  <div class="summary"><span id="summaryLabel">সব দোকান মিলিয়ে মোট বাকি:</span><span class="total" id="totalBaki">৳ ০</span></div>
+  <div class="odbar" id="odBar" hidden></div>
 
   <div class="banner" id="bkBanner" hidden>
     <span></span>
@@ -230,19 +259,20 @@ dialog .fld{margin-bottom:10px}
 
   <div class="list-section">
     <div class="form-group">
-      <input type="search" id="search" class="form-control" placeholder="🔍 দোকানের নাম খুঁজুন" aria-label="দোকান খুঁজুন">
+      <input type="search" id="search" class="form-control" placeholder="🔍 দোকানের নাম খুঁজুন" aria-label="খুঁজুন">
     </div>
     <div id="shopListWrap"></div>
   </div>
 
   <div class="tools">
+    <button class="btn ghost" id="btnDue" type="button" data-for="seller" hidden style="grid-column:1/-1;background:#fef3c7;color:#92400e">📋 বকেয়া তালিকা (পিডিএফ)</button>
     <button class="btn ghost" id="btnExport" type="button">⬇ ব্যাকআপ ডাউনলোড</button>
     <button class="btn ghost" id="btnBkShare" type="button">📤 ব্যাকআপ শেয়ার</button>
     <button class="btn ghost" id="btnImport" type="button">⬆ রিস্টোর</button>
     <button class="btn ghost" id="btnCsv" type="button">📄 CSV</button>
     <input type="file" id="importFile" accept="application/json,.json,text/plain" class="sr-only">
   </div>
-  <p class="privacy">🔒 আপনার হিসাব শুধু আপনার ফোনেই থাকে। ব্রাউজারের ডেটা মুছলে হিসাব হারিয়ে যাবে, তাই নিয়মিত ব্যাকআপ নিন (হোয়াটসঅ্যাপ বা Google Drive-এ শেয়ার করা সবচেয়ে সহজ)।</p>
+  <p class="privacy">🔒 আপনার হিসাব শুধু আপনার ফোনেই থাকে। ডেটা মুছলে বা ফোন হারালে হিসাব ফিরে পাওয়া যাবে না, তাই নিয়মিত ব্যাকআপ নিন (হোয়াটসঅ্যাপ বা Google Drive-এ শেয়ার করা সবচেয়ে সহজ)।</p>
 </div>
 
 <div class="dev-footer">
@@ -252,7 +282,7 @@ dialog .fld{margin-bottom:10px}
   <button type="button" id="btnShare">অ্যাপ শেয়ার করুন</button>
 </div>
 
-<!-- পিডিএফ প্রস্তুত (ভাউচার / স্টেটমেন্ট) -->
+<!-- পিডিএফ প্রস্তুত (ভাউচার / স্টেটমেন্ট / বকেয়া তালিকা) -->
 <dialog id="vDlg">
   <h2 id="vTitle">পিডিএফ প্রস্তুত</h2>
   <p id="vInfo"></p>
@@ -276,17 +306,21 @@ dialog .fld{margin-bottom:10px}
     <input id="eDesc" class="form-control" type="text" maxlength="120"></div>
   <div class="fld"><label class="lbl" for="eDate">তারিখ</label>
     <input id="eDate" class="form-control" type="date"></div>
+  <div class="fld" data-for="seller" hidden><label class="lbl" for="eDue">পরিশোধের প্রতিশ্রুত তারিখ (ঐচ্ছিক)</label>
+    <input id="eDue" class="form-control" type="date"></div>
   <div class="stack"><button class="btn" id="eSave" type="button">সংরক্ষণ করুন</button><button class="btn ghost" id="eCancel" type="button">বাতিল</button></div>
 </dialog>
 
-<!-- দোকানের নাম বদল / মার্জ -->
+<!-- নাম বদল / মার্জ -->
 <dialog id="sDlg">
   <h2>নাম বদল / খাতা মার্জ</h2>
-  <p>অন্য একটি দোকানের নাম দিলে দুটি খাতা একসাথে মিলে একটি হয়ে যাবে। এটি ভুল বানানের দুটি খাতা এক করতে কাজে লাগে।</p>
-  <div class="fld"><label class="lbl" for="sName">দোকানের নাম</label>
+  <p>অন্য একটি নামের খাতা আগে থেকে থাকলে নতুন নাম দিলে দুটি খাতা একসাথে মিলে একটি হয়ে যাবে। এটি ভুল বানানের দুটি খাতা এক করতে কাজে লাগে।</p>
+  <div class="fld"><label class="lbl" for="sName">নাম</label>
     <input id="sName" class="form-control" type="text" list="shopList" maxlength="60" autocomplete="off"></div>
   <div class="fld"><label class="lbl" for="sPhone">হোয়াটসঅ্যাপ নম্বর (ফাঁকা রাখলে বদলাবে না)</label>
     <input id="sPhone" class="form-control" type="tel" inputmode="tel" maxlength="20"></div>
+  <div class="fld" data-for="seller" hidden><label class="lbl" for="sLimit">সর্বোচ্চ বাকির সীমা (৳) — ফাঁকা মানে সীমা নেই</label>
+    <input id="sLimit" class="form-control" type="number" inputmode="decimal" min="0" step="1"></div>
   <div class="stack"><button class="btn" id="sSave" type="button">সংরক্ষণ করুন</button><button class="btn ghost" id="sCancel" type="button">বাতিল</button></div>
 </dialog>
 
@@ -299,6 +333,16 @@ dialog .fld{margin-bottom:10px}
     <div><label class="lbl" for="stTo">শেষ তারিখ</label><input id="stTo" class="form-control" type="date"></div>
   </div>
   <div class="stack"><button class="btn" id="stGo" type="button">পিডিএফ তৈরি করুন</button><button class="btn ghost" id="stCancel" type="button">বাতিল</button></div>
+</dialog>
+
+<!-- দোকানদারের তথ্য -->
+<dialog id="pDlg">
+  <h2>🏪 আমার দোকানের তথ্য</h2>
+  <p>এই তথ্য ক্যাশ মেমো, স্টেটমেন্ট ও বকেয়া তালিকার মাথায় ছাপা হবে।</p>
+  <div class="fld"><label class="lbl" for="pName">দোকানের নাম</label><input id="pName" class="form-control" type="text" maxlength="60" placeholder="যেমন: করিম জেনারেল স্টোর"></div>
+  <div class="fld"><label class="lbl" for="pPhone">মোবাইল নম্বর</label><input id="pPhone" class="form-control" type="tel" inputmode="tel" maxlength="20"></div>
+  <div class="fld"><label class="lbl" for="pAddr">ঠিকানা (ঐচ্ছিক)</label><input id="pAddr" class="form-control" type="text" maxlength="100" placeholder="যেমন: হাটহাজারী বাজার, চট্টগ্রাম"></div>
+  <div class="stack"><button class="btn" id="pSave" type="button">সংরক্ষণ করুন</button><button class="btn ghost" id="pCancel" type="button">বাতিল</button></div>
 </dialog>
 
 <div id="toast" hidden role="status"><span id="toastMsg"></span><button id="toastBtn" type="button"></button></div>
@@ -318,14 +362,17 @@ const CONFIG = {
   backupEveryDays: 7,
   units: ['পিস', 'কেজি', 'গ্রাম', 'লিটার', 'ডজন', 'হালি', 'প্যাকেট', 'বোতল', 'বস্তা', 'মিটার']
 };
-const KEY = 'baki_manager_v2';
+const MODE_KEY = 'baki_mode';
 const OLD_KEY = 'my_baki_manager_data_v1';
+const PROFILE_KEY = 'baki_profile';
 const COUNTED = 'baki_counted';
 const COUNT_LAST = 'baki_count_last';
 const ME_KEY = 'baki_me';
 const LAST_BK = 'baki_last_backup';
 const SNOOZE = 'baki_bk_snooze';
 const CASH = 'হাতে নগদ';
+const APP = typeof window.AndroidBridge !== 'undefined' && window.AndroidBridge !== null;   // অ্যান্ড্রয়েড APK-র ভেতরে চললে true
+const keyFor = m => m === 'seller' ? 'baki_manager_seller_v1' : 'baki_manager_v2';
 
 /* ============ Helpers ============ */
 const $ = id => document.getElementById(id);
@@ -334,6 +381,7 @@ const nf = new Intl.NumberFormat('bn-BD', { maximumFractionDigits: 2 });
 const num = n => nf.format(n).replace(/,/g, '');
 const money = p => '৳ ' + nf.format(p / 100);            // p = পয়সা (পূর্ণসংখ্যা)
 const fmtDate = ts => new Date(ts).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short', year: 'numeric' });
+const fmtYmd = s => fmtDate(new Date(s + 'T12:00:00').getTime());
 const pad = n => String(n).padStart(2, '0');
 const ymd = ts => { const d = new Date(ts); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
 const keyOf = n => String(n || '').trim().toLowerCase();
@@ -352,6 +400,26 @@ function normPhone(raw) {
   if (p.length === 10 && p.startsWith('1')) return '880' + p;
   return p;
 }
+
+/* ============ অ্যান্ড্রয়েড ব্রিজ (ওয়েবে এগুলো সাধারণ ব্রাউজার আচরণে ফেরে) ============ */
+const blobToB64 = blob => new Promise((res, rej) => {
+  const r = new FileReader();
+  r.onload = () => res(String(r.result).split(',')[1] || '');
+  r.onerror = () => rej(r.error);
+  r.readAsDataURL(blob);
+});
+async function saveBlob(name, blob, mime) {
+  if (APP) { window.AndroidBridge.saveFile(name, mime, await blobToB64(blob)); return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+async function shareBlobApp(name, blob, mime) { window.AndroidBridge.shareFile(name, mime, await blobToB64(blob)); }
+function openExternal(url) {
+  if (APP) window.AndroidBridge.openUrl(url); else window.open(url, '_blank', 'noopener');
+}
+const canShareFiles = () => APP || !!(navigator.canShare && navigator.share);
 
 /* ============ কথায় টাকা ============ */
 const BN = ['শূন্য','এক','দুই','তিন','চার','পাঁচ','ছয়','সাত','আট','নয়','দশ','এগারো','বারো','তেরো','চৌদ্দ','পনেরো','ষোল','সতেরো','আঠারো','ঊনিশ','বিশ',
@@ -394,10 +462,11 @@ function initGA() {
   window.gtag = function () { dataLayer.push(arguments); };
   gtag('js', new Date());
   gtag('config', id);
+  if (APP) gtag('set', 'user_properties', { platform: 'android_apk' });
 }
 function track(evt, params = {}) { try { window.gtag && gtag('event', evt, params); } catch (e) {} }
 
-/* ============ User counter (প্রতি ব্রাউজারে একবারই গণনা) ============ */
+/* ============ User counter (প্রতি ইনস্টলে একবারই গণনা) ============ */
 async function trackUsers() {
   const el = $('userCount');
   const last = lsGet(COUNT_LAST);
@@ -414,37 +483,91 @@ async function trackUsers() {
   } catch (e) { if (!last) el.textContent = '—'; }
 }
 
-/* ============ Storage ============ */
-let meta = { vno: 0 };
+/* ============ মোড ও Storage ============ */
+let mode = lsGet(MODE_KEY) === 'seller' ? 'seller' : 'buyer';
+let meta = { vno: 0, limits: {} };
+let tx = [];
 function migrate(r) {
   if (!r || !r.shopName || !(r.amount > 0)) return null;
   return { id: r.id || newId(), shop: String(r.shopName), phone: String(r.shopPhone || ''),
            type: r.type === 'pari' ? 'pari' : 'baki', paisa: Math.round(r.amount * 100),
            desc: String(r.desc || ''), ts: r.id || Date.now() };
 }
-function load() {
+function load(m) {
+  meta = { vno: 0, limits: {} };
   try {
-    const raw = lsGet(KEY);
+    const raw = lsGet(keyFor(m));
     if (raw) {
       try {
         const d = JSON.parse(raw);
-        if (Array.isArray(d.tx)) { meta.vno = Number(d.vno) || 0; return d.tx; }
-      } catch (e) { lsSet(KEY + '_corrupt', raw); }
+        if (Array.isArray(d.tx)) { meta.vno = Number(d.vno) || 0; meta.limits = d.limits && typeof d.limits === 'object' ? d.limits : {}; return d.tx; }
+      } catch (e) { lsSet(keyFor(m) + '_corrupt', raw); }
     }
-    const old = lsGet(OLD_KEY);
-    if (old) { const arr = JSON.parse(old); if (Array.isArray(arr)) return arr.map(migrate).filter(Boolean); }
+    if (m === 'buyer') {
+      const old = lsGet(OLD_KEY);
+      if (old) { const arr = JSON.parse(old); if (Array.isArray(arr)) return arr.map(migrate).filter(Boolean); }
+    }
   } catch (e) {}
   return [];
 }
-let tx = load();
-meta.vno = Math.max(meta.vno, ...tx.map(t => (t.voucher && t.voucher.vno) || 0), 0);
+function loadMode(m) {
+  tx = load(m);
+  meta.vno = Math.max(meta.vno, ...tx.map(t => (t.voucher && t.voucher.vno) || 0), 0);
+}
+loadMode(mode);
 let warned = false;
 function save() {
-  try { localStorage.setItem(KEY, JSON.stringify({ v: 3, vno: meta.vno, tx })); }
+  try { localStorage.setItem(keyFor(mode), JSON.stringify({ v: 4, mode, vno: meta.vno, limits: meta.limits, tx })); }
   catch (e) { if (!warned) { warned = true; alert('ডেটা সংরক্ষণ করা যায়নি। প্রাইভেট মোডে থাকলে সাধারণ মোডে খুলুন।'); } }
 }
 // ব্রাউজারকে স্থায়ী স্টোরেজ দিতে বলা (জায়গা কমলে ডেটা যেন নিজে নিজে মুছে না যায়)
 try { if (navigator.storage && navigator.storage.persist) Promise.resolve(navigator.storage.persist()).catch(() => {}); } catch (e) {}
+
+function getProfile() {
+  try { const p = JSON.parse(lsGet(PROFILE_KEY) || '{}'); return { name: String(p.name || ''), phone: String(p.phone || ''), addr: String(p.addr || '') }; }
+  catch (e) { return { name: '', phone: '', addr: '' }; }
+}
+
+/* মোড অনুযায়ী লেবেল */
+const LBL = () => mode === 'seller' ? {
+  sub: 'ক্রেতার বাকি-পাওনার হিসাব, ক্যাশ মেমো ও তাগাদা', partyName: 'ক্রেতার নাম', partyPh: 'যেমন: করিম সাহেব',
+  partyPhone: 'ক্রেতার হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)', add: 'বাকি দিলাম (+)', pay: 'টাকা পেলাম (−)', paid: 'এখন জমা পেলাম (৳)',
+  total: 'সব ক্রেতার মোট পাওনা:', due: 'পাওনা', adv: 'অগ্রিম জমা', search: '🔍 ক্রেতার নাম খুঁজুন', word: 'ক্রেতা'
+} : {
+  sub: 'বাকি হিসাব রাখুন, বিল বানান ও পিডিএফ ভাউচার পাঠান', partyName: 'দোকানদারের নাম (যার কাছ থেকে কেনা)', partyPh: 'যেমন: রহিম স্টোর',
+  partyPhone: 'দোকানদারের হোয়াটসঅ্যাপ নম্বর (ঐচ্ছিক)', add: 'বাকি নিলাম (+)', pay: 'টাকা পরিশোধ (−)', paid: 'এখন জমা দিলাম (৳)',
+  total: 'সব দোকান মিলিয়ে মোট বাকি:', due: 'বাকি', adv: 'অগ্রিম', search: '🔍 দোকানের নাম খুঁজুন', word: 'দোকান'
+};
+function applyMode() {
+  const l = LBL();
+  document.querySelectorAll('[data-for]').forEach(el => { el.hidden = el.dataset.for !== mode; });
+  $('modeBuyer').setAttribute('aria-selected', mode === 'buyer');
+  $('modeSeller').setAttribute('aria-selected', mode === 'seller');
+  $('hdrSub').textContent = l.sub;
+  $('lblShopName').textContent = l.partyName;
+  $('shopName').placeholder = l.partyPh;
+  $('lblShopPhone').textContent = l.partyPhone;
+  $('lblAdd').textContent = l.add;
+  $('lblPay').textContent = l.pay;
+  $('lblPaid').textContent = l.paid;
+  $('summaryLabel').textContent = l.total;
+  $('search').placeholder = l.search;
+  $('eType').options[0].text = l.add;
+  $('eType').options[1].text = l.pay;
+}
+function setMode(m) {
+  if (m === mode) return;
+  save();
+  mode = m; lsSet(MODE_KEY, m);
+  loadMode(m);
+  ['shopName', 'shopPhone', 'amount', 'desc', 'discount', 'paidNow', 'payRef', 'qDue', 'bDue', 'search'].forEach(id => { $(id).value = ''; });
+  $('itemsWrap').innerHTML = ''; addRow();
+  applyMode(); render(); recalc();
+  track('mode_switch', { mode: m });
+  if (m === 'seller' && !getProfile().name) openDlg($('pDlg'));
+}
+$('modeBuyer').onclick = () => setMode('buyer');
+$('modeSeller').onclick = () => setMode('seller');
 
 /* ============ Grouping ============ */
 function groupShops() {
@@ -469,6 +592,30 @@ function productMap() {
   const m = new Map();
   [...tx].sort((a, b) => a.ts - b.ts).forEach(t => (t.voucher && t.voucher.items || []).forEach(i => m.set(keyOf(i.name), { name: i.name, rate: i.rate, unit: i.unit })));
   return m;
+}
+/* মেয়াদোত্তীর্ণ হিসাব: জমাগুলো সবচেয়ে পুরনো বাকি থেকে আগে কাটা হয় (FIFO) */
+function overdueInfo(list, today = ymd(Date.now())) {
+  const asc = [...list].sort((a, b) => a.ts - b.ts);
+  let paid = asc.filter(t => t.type === 'pari').reduce((s, t) => s + t.paisa, 0);
+  let overdue = 0, oldest = '', nextDue = '';
+  for (const t of asc) {
+    if (t.type !== 'baki') continue;
+    const use = Math.min(t.paisa, paid); paid -= use;
+    const rem = t.paisa - use;
+    if (rem > 0 && t.due) {
+      if (t.due < today) { overdue += rem; if (!oldest || t.due < oldest) oldest = t.due; }
+      else if (!nextDue || t.due < nextDue) nextDue = t.due;
+    }
+  }
+  const days = oldest ? Math.floor((new Date(today + 'T12:00:00') - new Date(oldest + 'T12:00:00')) / 864e5) : 0;
+  return { overdue, oldest, nextDue, days };
+}
+const limitOf = shop => meta.limits[keyOf(shop)] || 0;
+function checkLimit(shop, newBalance, oldBalance) {
+  if (mode !== 'seller') return true;
+  const lim = limitOf(shop);
+  if (!lim || newBalance <= lim || newBalance <= oldBalance) return true;
+  return confirm(`এই ক্রেতার বাকির সীমা ${money(lim)}। এই লেনদেনের পর বাকি হবে ${money(newBalance)}, যা সীমা ছাড়িয়ে যাবে। তবুও চালিয়ে যাবেন?`);
 }
 
 /* ============ Toast (undo) ============ */
@@ -498,19 +645,24 @@ const markBackup = () => { lsSet(LAST_BK, String(Date.now())); renderBanner(); }
 
 /* ============ Render ============ */
 function balView(b) {
-  if (b > 0) return { cls: 'due', label: 'বাকি', txt: money(b) };
-  if (b < 0) return { cls: 'adv', label: 'অগ্রিম', txt: money(-b) };
+  const l = LBL();
+  if (b > 0) return { cls: 'due', label: l.due, txt: money(b) };
+  if (b < 0) return { cls: 'adv', label: l.adv, txt: money(-b) };
   return { cls: 'zero', label: 'পরিশোধিত', txt: money(0) };
 }
 const vLabel = v => 'ভাউচার ' + num(v.vno);
 function render() {
-  // নতুন করে আঁকার আগে কোন কোন দোকানের কার্ড খোলা ছিল মনে রাখা
+  // নতুন করে আঁকার আগে কোন কোন কার্ড খোলা ছিল মনে রাখা
   const openKeys = new Set([...document.querySelectorAll('#shopListWrap details.shop[open]')].map(d => d.dataset.k));
+  const seller = mode === 'seller';
   const shops = groupShops();
+  shops.forEach(s => { s.info = seller ? overdueInfo(s.list) : null; });
   const q = keyOf($('search').value);
-  let total = 0;
-  shops.forEach(s => { if (s.bal > 0) total += s.bal; });
+  let total = 0, odTotal = 0, odCount = 0;
+  shops.forEach(s => { if (s.bal > 0) { total += s.bal; if (seller && s.info.overdue > 0) { odTotal += Math.min(s.info.overdue, s.bal); odCount++; } } });
   $('totalBaki').textContent = money(total);
+  $('odBar').hidden = !(seller && odTotal > 0);
+  if (seller && odTotal > 0) $('odBar').textContent = `⏰ মেয়াদোত্তীর্ণ বকেয়া: ${money(odTotal)} (${nf.format(odCount)} জন ক্রেতা)`;
   renderBanner();
   $('shopList').innerHTML = shops.map(s => `<option value="${esc(s.name)}">`).join('');
   $('prodList').innerHTML = [...productMap().values()].map(p => `<option value="${esc(p.name)}">`).join('');
@@ -523,15 +675,20 @@ function render() {
   $('shopListWrap').innerHTML = shown.map(s => {
     const b = balView(s.bal);
     const key = esc(keyOf(s.name));
+    const lim = limitOf(s.name);
+    const badges = seller ? [
+      s.bal > 0 && s.info.overdue > 0 ? `<span class="od">⏰ ${num(s.info.days)} দিন মেয়াদোত্তীর্ণ</span>` : (s.bal > 0 && s.info.nextDue ? `<span class="nd">📅 ${fmtYmd(s.info.nextDue)}</span>` : ''),
+      lim && s.bal > lim ? '<span class="od">সীমা অতিক্রান্ত</span>' : ''
+    ].filter(Boolean).join('') : '';
     return `<details class="shop" data-k="${key}" ${q || openKeys.has(keyOf(s.name)) ? 'open' : ''}>
       <summary>
-        <div><div class="name">${esc(s.name)}</div><div class="sub">${nf.format(s.list.length)} টি লেনদেন · সর্বশেষ ${fmtDate(s.last)}</div></div>
+        <div><div class="name">${esc(s.name)}</div><div class="sub">${nf.format(s.list.length)} টি লেনদেন · সর্বশেষ ${fmtDate(s.last)}</div>${badges ? `<div class="badges">${badges}</div>` : ''}</div>
         <div class="bal ${b.cls}">${b.txt}<small>${b.label}</small></div>
       </summary>
       <div class="shop-body">
         ${s.list.map(t => `
           <div class="tx">
-            <div><div class="d">${fmtDate(t.ts)}${t.voucher ? ' · ' + esc(vLabel(t.voucher)) : ''}</div>${t.desc ? `<div class="ds">${esc(t.desc)}</div>` : ''}
+            <div><div class="d">${fmtDate(t.ts)}${t.voucher ? ' · ' + esc(vLabel(t.voucher)) : ''}${t.due && t.type === 'baki' ? ' · পরিশোধ: ' + fmtYmd(t.due) : ''}</div>${t.desc ? `<div class="ds">${esc(t.desc)}</div>` : ''}
               <div class="acts">
                 ${t.voucher ? `<button class="vc" data-vc="${esc(t.id)}" type="button">📄 ভাউচার</button>` : ''}
                 ${!t.billId ? `<button class="ed" data-edit="${esc(t.id)}" type="button">✏ সম্পাদনা</button>` : ''}
@@ -540,9 +697,10 @@ function render() {
             <div class="v ${t.type}">${t.type === 'baki' ? '+' : '−'} ${money(t.paisa)}<div class="ds">${t.type === 'baki' ? 'বাকি' : 'জমা'}</div></div>
           </div>`).join('')}
         <div class="shop-acts">
+          ${seller && s.bal > 0 && s.phone ? `<button class="wa-btn rm2" data-rem="${key}" type="button">🔔 তাগাদা পাঠান</button>` : ''}
           ${s.phone ? `<button class="wa-btn" data-wa="${key}" type="button">📲 হিসাব পাঠান</button>` : ''}
           <button class="wa-btn st" data-st="${key}" type="button">🧾 স্টেটমেন্ট পিডিএফ</button>
-          <button class="wa-btn rn" data-ren="${key}" type="button">✏ নাম বদল / মার্জ</button>
+          <button class="wa-btn rn" data-ren="${key}" type="button">✏ নাম বদল / ${seller ? 'সীমা' : 'মার্জ'}</button>
         </div>
       </div>
     </details>`;
@@ -570,11 +728,14 @@ $('panelQuick').addEventListener('submit', e => {
   const type = document.querySelector('input[name="type"]:checked').value;
   const paisa = toPaisa($('amount').value);
   const desc = $('desc').value.trim();
-  if (!shop || !paisa) { alert('অনুগ্রহ করে দোকানদারের নাম এবং সঠিক টাকার পরিমাণ লিখুন!'); return; }
-  tx.unshift({ id: newId(), shop, phone, type, paisa, desc, ts: Date.now() });
+  const due = mode === 'seller' && type === 'baki' ? $('qDue').value : '';
+  if (!shop || !paisa) { alert('অনুগ্রহ করে নাম এবং সঠিক টাকার পরিমাণ লিখুন!'); return; }
+  const old = balanceOf(shop);
+  if (type === 'baki' && !checkLimit(shop, old + paisa, old)) return;
+  tx.unshift({ id: newId(), shop, phone, type, paisa, desc, ts: Date.now(), ...(due ? { due } : {}) });
   save(); render(); recalc();
-  track('add_transaction', { type, mode: 'quick' });
-  $('amount').value = ''; $('desc').value = ''; $('amount').focus();
+  track('add_transaction', { type, mode: 'quick', role: mode });
+  $('amount').value = ''; $('desc').value = ''; $('qDue').value = ''; $('amount').focus();
 });
 
 $('shopName').addEventListener('change', () => {
@@ -629,6 +790,8 @@ function recalc() {
   c.rows.forEach(r => { r.row.querySelector('.i-tot').textContent = money(r.paisa); });
   const prevLine = c.prev >= 0 ? ['আগের বাকি', money(c.prev)] : ['আগের অগ্রিম জমা', '− ' + money(-c.prev)];
   const fin = balView(c.remaining);
+  const lim = mode === 'seller' ? limitOf($('shopName').value) : 0;
+  const over = lim && c.remaining > lim;
   $('calc').innerHTML = `
     <div><span>পণ্যের মোট</span><span>${money(c.subtotal)}</span></div>
     ${c.discount ? `<div><span>ছাড়</span><span>− ${money(c.discount)}</span></div>` : ''}
@@ -636,7 +799,8 @@ function recalc() {
     <div><span>${prevLine[0]}</span><span>${prevLine[1]}</span></div>
     <div><span>জমা</span><span>− ${money(c.paid)}</span></div>
     <div class="big ${fin.cls}"><span>${c.remaining > 0 ? 'অবশিষ্ট বাকি' : c.remaining < 0 ? 'অগ্রিম জমা' : 'সম্পূর্ণ পরিশোধিত'}</span><span>${money(Math.abs(c.remaining))}</span></div>
-    ${c.remaining !== 0 ? `<span class="words">${esc(amountWords(Math.abs(c.remaining)))}</span>` : ''}`;
+    ${c.remaining !== 0 ? `<span class="words">${esc(amountWords(Math.abs(c.remaining)))}</span>` : ''}
+    ${lim ? `<div><span>বাকির সীমা</span><span class="${over ? 'warn' : ''}">${money(lim)}${over ? ' — অতিক্রান্ত!' : ''}</span></div>` : ''}`;
 }
 $('btnAddRow').onclick = () => { addRow().querySelector('.i-name').focus(); recalc(); };
 $('panelBill').addEventListener('input', e => {
@@ -662,40 +826,48 @@ $('myName').value = lsGet(ME_KEY) || '';
 $('myName').addEventListener('change', () => lsSet(ME_KEY, $('myName').value.trim()));
 
 $('btnComplete').onclick = () => {
+  const seller = mode === 'seller';
   const shop = $('shopName').value.trim();
   const phone = $('shopPhone').value.trim();
-  if (!shop) { alert('অনুগ্রহ করে দোকানদারের নাম লিখুন!'); $('shopName').focus(); return; }
+  if (!shop) { alert(seller ? 'অনুগ্রহ করে ক্রেতার নাম লিখুন!' : 'অনুগ্রহ করে দোকানদারের নাম লিখুন!'); $('shopName').focus(); return; }
+  const profile = getProfile();
+  if (seller && !profile.name) { alert('আগে "⚙ আমার দোকানের তথ্য" দিন, নইলে মেমোর মাথায় দোকানের নাম আসবে না।'); openDlg($('pDlg')); return; }
   const c = calcState();
   const bad = c.rows.find(r => r.filled && !r.ok);
   if (bad) { alert('একটি পণ্যের তথ্য অসম্পূর্ণ। নাম, পরিমাণ ও দর সবগুলো দিন, অথবা সারিটি মুছে দিন।'); bad.row.querySelector('.i-name').focus(); return; }
   const items = c.rows.filter(r => r.ok).map(r => ({ name: r.name, qty: r.qty, unit: r.unit, rate: r.rate, paisa: r.paisa }));
   if (!items.length && !c.paid) { alert('অন্তত একটি পণ্য অথবা জমার পরিমাণ দিন।'); return; }
+  if (c.total > 0 && !checkLimit(shop, c.remaining, c.prev)) return;
 
   const ts = Date.now();
   const billId = 'B' + newId();
   const vno = ++meta.vno;
-  const me = $('myName').value.trim();
-  lsSet(ME_KEY, me);
+  const me = seller ? '' : $('myName').value.trim();
+  if (!seller) lsSet(ME_KEY, me);
   const payMethod = c.paid ? $('payMethod').value : '';
   const payRef = c.paid ? $('payRef').value.trim() : '';
-  const v = { vno, ts, billId, shop, shopPhone: phone, me, items, subtotal: c.subtotal, discount: c.discount,
-              total: c.total, prev: c.prev, paid: c.paid, remaining: c.remaining, payMethod, payRef };
+  const due = seller && c.total > 0 ? $('bDue').value : '';
+  const v = { vno, ts, billId, mode, shop, shopPhone: phone, me, items, subtotal: c.subtotal, discount: c.discount,
+              total: c.total, prev: c.prev, paid: c.paid, remaining: c.remaining, payMethod, payRef, due,
+              ...(seller ? { seller: profile } : {}) };
   const summary = items.map(i => i.name).join(', ');
   const payDesc = 'বিলের সাথে জমা' + (payMethod && payMethod !== CASH ? ` (${payMethod})` : '');
-  if (items.length) tx.unshift({ id: newId(), shop, phone, type: 'baki', paisa: c.total, desc: summary, ts, billId, voucher: v });
+  if (items.length) tx.unshift({ id: newId(), shop, phone, type: 'baki', paisa: c.total, desc: summary, ts, billId, voucher: v, ...(due ? { due } : {}) });
   if (c.paid) tx.unshift({ id: newId(), shop, phone, type: 'pari', paisa: c.paid, desc: payDesc, ts: ts + 1, billId, voucher: items.length ? undefined : v });
   save(); render();
-  track('bill_complete', { items: items.length, with_payment: c.paid > 0, method: payMethod || 'none' });
+  track('bill_complete', { items: items.length, with_payment: c.paid > 0, method: payMethod || 'none', role: mode });
 
   // ফর্ম পরিষ্কার
   $('itemsWrap').innerHTML = ''; addRow();
-  $('discount').value = ''; $('paidNow').value = ''; $('payRef').value = ''; $('payMethod').selectedIndex = 0;
+  $('discount').value = ''; $('paidNow').value = ''; $('payRef').value = ''; $('payMethod').selectedIndex = 0; $('bDue').value = '';
   recalc();
   openDoc(voucherDoc(v));
 };
 
 /* ============ ভাউচার ============ */
 function voucherHTML(v) {
+  const sellerV = v.mode === 'seller';
+  const sp = v.seller || {};
   const rows = v.items.length ? v.items.map((i, n) => `<tr><td>${nf.format(n + 1)}</td><td>${esc(i.name)}</td><td class="r">${nf.format(i.qty)} ${esc(i.unit)}</td><td class="r">${nf.format(i.rate)}</td><td class="r">${money(i.paisa)}</td></tr>`).join('')
     : `<tr><td colspan="5" class="empty-items">কোনো পণ্য নেই — শুধু জমা</td></tr>`;
   const fin = balView(v.remaining);
@@ -703,25 +875,39 @@ function voucherHTML(v) {
   const grand = v.prev + v.total;
   const showPay = v.paid && v.payMethod && (v.payMethod !== CASH || v.payRef);
   const payTxt = showPay ? ` <small style="color:#64748b">(${esc(v.payMethod)}${v.payRef ? ' · ' + esc(v.payRef) : ''})</small>` : '';
+  const topBlock = sellerV
+    ? `<h1>${esc(sp.name || 'ক্যাশ মেমো')}</h1>${sp.phone ? `<div class="t2">মোবাইল: ${esc(sp.phone)}</div>` : ''}${sp.addr ? `<div class="t2">${esc(sp.addr)}</div>` : ''}<div class="t2">ক্যাশ মেমো / বিক্রয় ভাউচার</div>`
+    : `<h1>${esc(v.shop)}</h1>${v.shopPhone ? `<div class="t2">ফোন: ${esc(v.shopPhone)}</div>` : ''}<div class="t2">বাকি মেমো / ক্রয় ভাউচার</div>`;
+  const metaLeft = sellerV
+    ? `ভাউচার নং: <b>${esc(num(v.vno))}</b><br>ক্রেতা: <b>${esc(v.shop)}</b>${v.shopPhone ? `<br>ফোন: ${esc(v.shopPhone)}` : ''}`
+    : `ভাউচার নং: <b>${esc(num(v.vno))}</b>${v.me ? `<br>ক্রেতা: <b>${esc(v.me)}</b>` : ''}`;
   return `<div class="vch">
-    <div class="top"><h1>${esc(v.shop)}</h1>${v.shopPhone ? `<div class="t2">ফোন: ${esc(v.shopPhone)}</div>` : ''}<div class="t2">বাকি মেমো / ক্রয় ভাউচার</div></div>
-    <div class="meta"><div>ভাউচার নং: <b>${esc(num(v.vno))}</b>${v.me ? `<br>ক্রেতা: <b>${esc(v.me)}</b>` : ''}</div><div style="text-align:right">তারিখ: <b>${fmtDate(v.ts)}</b><br>সময়: ${new Date(v.ts).toLocaleTimeString('bn-BD', { hour: 'numeric', minute: '2-digit' })}</div></div>
+    <div class="top">${topBlock}</div>
+    <div class="meta"><div>${metaLeft}</div><div style="text-align:right">তারিখ: <b>${fmtDate(v.ts)}</b><br>সময়: ${new Date(v.ts).toLocaleTimeString('bn-BD', { hour: 'numeric', minute: '2-digit' })}</div></div>
     <table><thead><tr><th>ক্র.</th><th>পণ্য</th><th class="r">পরিমাণ</th><th class="r">দর</th><th class="r">টাকা</th></tr></thead><tbody>${rows}</tbody></table>
     <div class="sum">
       ${v.discount ? `<div><span>পণ্যের মোট</span><span>${money(v.subtotal)}</span></div><div><span>(−) ছাড়</span><span>${money(v.discount)}</span></div>` : ''}
       <div><span>এই বিলের মোট</span><b>${money(v.total)}</b></div>
       ${prevRow}
       <div class="line"><span>${grand >= 0 ? 'মোট পরিশোধযোগ্য' : 'সমন্বয়ের পর অগ্রিম'}</span><b>${money(Math.abs(grand))}</b></div>
-      <div><span>(−) এখন জমা${payTxt}</span><span>${money(v.paid)}</span></div>
+      <div><span>(−) ${sellerV ? 'এখন জমা পেলাম' : 'এখন জমা'}${payTxt}</span><span>${money(v.paid)}</span></div>
     </div>
     <div class="final ${fin.cls}"><span>${v.remaining > 0 ? 'অবশিষ্ট বাকি' : v.remaining < 0 ? 'অগ্রিম জমা' : 'সম্পূর্ণ পরিশোধিত'}</span><span>${money(Math.abs(v.remaining))}</span></div>
     ${v.remaining !== 0 ? `<div class="words">কথায়: ${esc(amountWords(Math.abs(v.remaining)))}</div>` : ''}
+    ${v.due && v.remaining > 0 ? `<div class="words">বাকি পরিশোধের প্রতিশ্রুত তারিখ: <b>${fmtYmd(v.due)}</b></div>` : ''}
     <div class="foot">এটি ইস্যুর সময়ের হিসাব · ${esc(CONFIG.appName)} · Developed by ${esc(CONFIG.developer)} · ${esc(CONFIG.contactPhone)}</div>
   </div>`;
 }
 function voucherMsg(v) {
+  const sellerV = v.mode === 'seller';
+  const sp = v.seller || {};
   const lines = v.items.map(i => `• ${i.name} — ${nf.format(i.qty)} ${i.unit} × ${nf.format(i.rate)} = ${money(i.paisa)}`).join('\n');
-  return `আসসালামু আলাইকুম ${v.shop} ভাই,\n\nভাউচার নং ${num(v.vno)} (${fmtDate(v.ts)})\n${lines ? lines + '\n' : ''}\nএই বিলের মোট: ${money(v.total)}\nজমা: ${money(v.paid)}\n${v.remaining > 0 ? 'অবশিষ্ট বাকি' : v.remaining < 0 ? 'অগ্রিম জমা' : 'অবস্থা'}: ${v.remaining === 0 ? 'সম্পূর্ণ পরিশোধিত' : money(Math.abs(v.remaining))}\n\nধন্যবাদ।${v.me ? '\n— ' + v.me : ''}\n(${CONFIG.appName})`;
+  const tail = `${v.remaining > 0 ? 'অবশিষ্ট বাকি' : v.remaining < 0 ? 'অগ্রিম জমা' : 'অবস্থা'}: ${v.remaining === 0 ? 'সম্পূর্ণ পরিশোধিত' : money(Math.abs(v.remaining))}`;
+  const dueTxt = v.due && v.remaining > 0 ? `\nপরিশোধের তারিখ: ${fmtYmd(v.due)}` : '';
+  if (sellerV) {
+    return `আসসালামু আলাইকুম ${v.shop} ভাই,\n\nআপনার ক্রয়ের মেমো নং ${num(v.vno)} (${fmtDate(v.ts)})\n${lines ? lines + '\n' : ''}\nএই বিলের মোট: ${money(v.total)}\nজমা পেয়েছি: ${money(v.paid)}\n${tail}${dueTxt}\n\nধন্যবাদ।\n— ${sp.name || ''}${sp.phone ? ' (' + sp.phone + ')' : ''}`;
+  }
+  return `আসসালামু আলাইকুম ${v.shop} ভাই,\n\nভাউচার নং ${num(v.vno)} (${fmtDate(v.ts)})\n${lines ? lines + '\n' : ''}\nএই বিলের মোট: ${money(v.total)}\nজমা: ${money(v.paid)}\n${tail}\n\nধন্যবাদ।${v.me ? '\n— ' + v.me : ''}\n(${CONFIG.appName})`;
 }
 
 /* ============ পিডিএফ তৈরি ============ */
@@ -741,8 +927,7 @@ async function makeVoucherPdf(v) {
   pdf.addImage(canvas.toDataURL('image/jpeg', 0.92), 'JPEG', 0, 0, w, imgH);
   return pdf.output('blob');
 }
-async function makeStatementPdf(st) {
-  const pages = statementPages(st);
+async function makePagesPdf(pages) {
   const { jsPDF } = window.jspdf;
   let pdf = null;
   for (let i = 0; i < pages.length; i++) {
@@ -753,13 +938,29 @@ async function makeStatementPdf(st) {
   }
   return pdf.output('blob');
 }
+/* সারির তালিকা থেকে একাধিক পৃষ্ঠার HTML (স্টেটমেন্ট ও বকেয়া তালিকা দুটোর জন্য) */
+function pagedHTML(o) {
+  const per = 19, chunks = [];
+  for (let i = 0; i < o.rows.length; i += per) chunks.push(o.rows.slice(i, i + per));
+  if (!chunks.length) chunks.push([]);
+  if (chunks[chunks.length - 1].length > 13) chunks.push([]);
+  return chunks.map((rows, idx) => {
+    const last = idx === chunks.length - 1;
+    return `<div class="vch pg">
+      <div class="top"><h1>${esc(o.h1)}</h1>${o.lines.map(x => `<div class="t2">${x}</div>`).join('')}</div>
+      <table>${o.cols}<thead>${o.thead}</thead><tbody>${rows.join('')}</tbody></table>
+      ${last ? o.summary : ''}
+      <div class="pgfoot">পৃষ্ঠা ${nf.format(idx + 1)}/${nf.format(chunks.length)} · ${esc(CONFIG.appName)} · Developed by ${esc(CONFIG.developer)} · ${esc(CONFIG.contactPhone)}</div>
+    </div>`;
+  });
+}
 
-/* ============ ডকুমেন্ট ডায়ালগ (ভাউচার ও স্টেটমেন্ট দুটোর জন্য) ============ */
+/* ============ ডকুমেন্ট ডায়ালগ (ভাউচার / স্টেটমেন্ট / বকেয়া তালিকা) ============ */
 let curDoc = null, curBlob = null;
 const voucherName = v => `voucher-${String(v.vno).padStart(4, '0')}-${ymd(v.ts)}.pdf`;
 function voucherDoc(v) {
   const fin = balView(v.remaining);
-  return { title: 'ভাউচার ' + num(v.vno) + ' প্রস্তুত', info: `${v.shop} · ${fin.label}: ${fin.txt}`, name: voucherName(v),
+  return { title: (v.mode === 'seller' ? 'মেমো ' : 'ভাউচার ') + num(v.vno) + ' প্রস্তুত', info: `${v.shop} · ${fin.label}: ${fin.txt}`, name: voucherName(v),
            make: () => makeVoucherPdf(v), phone: normPhone(v.shopPhone), msg: voucherMsg(v), html: () => voucherHTML(v), kind: 'voucher' };
 }
 function openDoc(doc) {
@@ -767,8 +968,9 @@ function openDoc(doc) {
   $('vTitle').textContent = doc.title;
   $('vInfo').textContent = doc.info;
   openDlg($('vDlg'));
-  $('vShare').hidden = !(navigator.canShare && navigator.share);
+  $('vShare').hidden = !canShareFiles();
   $('vWa').hidden = !doc.phone;
+  $('vPrint').hidden = APP;   // অ্যান্ড্রয়েড অ্যাপে প্রিন্ট নেই; পিডিএফ ডাউনলোড/শেয়ার করুন
 }
 async function ensurePdf() {
   if (curBlob) return curBlob;
@@ -786,21 +988,21 @@ function printHTML(name, bodyHtml) {
 $('vDownload').onclick = async () => {
   try {
     const blob = await ensurePdf();
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = curDoc.name;
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    track(curDoc.kind === 'statement' ? 'statement_pdf' : 'voucher_pdf');
-  } catch (e) { alert('পিডিএফ তৈরি করা যায়নি। প্রিন্ট বাটন দিয়ে "Save as PDF" করুন।'); }
+    await saveBlob(curDoc.name, blob, 'application/pdf');
+    track('pdf_download', { kind: curDoc.kind });
+  } catch (e) { alert('পিডিএফ তৈরি করা যায়নি।' + (APP ? '' : ' প্রিন্ট বাটন দিয়ে "Save as PDF" করুন।')); }
 };
 $('vShare').onclick = async () => {
   try {
     const blob = await ensurePdf();
+    if (APP) { await shareBlobApp(curDoc.name, blob, 'application/pdf'); track('pdf_share', { kind: curDoc.kind }); return; }
     const file = new File([blob], curDoc.name, { type: 'application/pdf' });
     if (navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: curDoc.title }); track('pdf_share', { kind: curDoc.kind }); }
     else alert('এই ডিভাইসে ফাইল শেয়ার সম্ভব নয়। ডাউনলোড করে পাঠান।');
   } catch (e) { if (e && e.name !== 'AbortError') alert('শেয়ার করা যায়নি। ডাউনলোড করে পাঠান।'); }
 };
 $('vWa').onclick = () => {
-  window.open(`https://wa.me/${curDoc.phone}?text=${encodeURIComponent(curDoc.msg)}`, '_blank', 'noopener');
+  openExternal(`https://wa.me/${curDoc.phone}?text=${encodeURIComponent(curDoc.msg)}`);
   track('whatsapp_share', { kind: curDoc.kind });
 };
 $('vPrint').onclick = () => { printHTML(curDoc.name, curDoc.html()); track('pdf_print', { kind: curDoc.kind }); };
@@ -825,40 +1027,43 @@ function computeStatement(key, fromYmd, toYmd) {
     const desc = t.voucher ? `${vLabel(t.voucher)}${t.desc ? ': ' + t.desc : ''}` : (t.desc || (t.type === 'baki' ? 'বাকি' : 'জমা'));
     rows.push({ ts: t.ts, desc, dr: t.type === 'baki' ? t.paisa : 0, cr: t.type === 'pari' ? t.paisa : 0, bal: run });
   });
-  return { shop: g.name, phone: g.phone, start, end, rows, opening, dr, cr, closing: run, count: inRange.length };
+  return { mode, profile: getProfile(), shop: g.name, phone: g.phone, start, end, rows, opening, dr, cr, closing: run, count: inRange.length };
 }
 const balCell = b => b >= 0 ? money(b) : '− ' + money(-b);
 function statementPages(st) {
-  const per = 19;
-  const chunks = [];
-  for (let i = 0; i < st.rows.length; i += per) chunks.push(st.rows.slice(i, i + per));
-  if (chunks[chunks.length - 1].length > 13) chunks.push([]);
+  const sellerS = st.mode === 'seller';
   const fin = balView(st.closing);
-  return chunks.map((rows, idx) => {
-    const last = idx === chunks.length - 1;
-    const trs = rows.map(r => r.open
-      ? `<tr class="open"><td colspan="4">${esc(r.desc)}</td><td class="r">${balCell(r.bal)}</td></tr>`
-      : `<tr><td>${fmtDate(r.ts)}</td><td title="${esc(r.desc)}">${esc(r.desc)}</td><td class="r">${r.dr ? money(r.dr) : ''}</td><td class="r">${r.cr ? money(r.cr) : ''}</td><td class="r">${balCell(r.bal)}</td></tr>`).join('');
-    return `<div class="vch pg">
-      <div class="top"><h1>${esc(st.shop)}</h1>${st.phone ? `<div class="t2">ফোন: ${esc(st.phone)}</div>` : ''}<div class="t2">হিসাবের স্টেটমেন্ট · ${fmtDate(st.start)} – ${fmtDate(st.end)}</div></div>
-      <table><colgroup><col style="width:92px"><col><col style="width:84px"><col style="width:84px"><col style="width:96px"></colgroup>
-        <thead><tr><th>তারিখ</th><th>বিবরণ</th><th class="r">বাকি (+)</th><th class="r">জমা (−)</th><th class="r">ব্যালেন্স</th></tr></thead><tbody>${trs}</tbody></table>
-      ${last ? `<div class="sum">
-          <div><span>এই সময়ে মোট বাকি (+)</span><span>${money(st.dr)}</span></div>
-          <div><span>এই সময়ে মোট জমা (−)</span><span>${money(st.cr)}</span></div>
-        </div>
-        <div class="final ${fin.cls}"><span>${st.closing > 0 ? 'সময়কাল শেষে বাকি' : st.closing < 0 ? 'সময়কাল শেষে অগ্রিম' : 'সম্পূর্ণ পরিশোধিত'}</span><span>${money(Math.abs(st.closing))}</span></div>
-        ${st.closing !== 0 ? `<div class="words">কথায়: ${esc(amountWords(Math.abs(st.closing)))}</div>` : ''}
-        <div class="words" style="font-size:11px">ঋণাত্মক (−) ব্যালেন্স মানে অগ্রিম জমা।</div>` : ''}
-      <div class="pgfoot">পৃষ্ঠা ${nf.format(idx + 1)}/${nf.format(chunks.length)} · ${esc(CONFIG.appName)} · Developed by ${esc(CONFIG.developer)} · ${esc(CONFIG.contactPhone)}</div>
-    </div>`;
+  const trs = st.rows.map(r => r.open
+    ? `<tr class="open"><td colspan="4">${esc(r.desc)}</td><td class="r">${balCell(r.bal)}</td></tr>`
+    : `<tr><td>${fmtDate(r.ts)}</td><td title="${esc(r.desc)}">${esc(r.desc)}</td><td class="r">${r.dr ? money(r.dr) : ''}</td><td class="r">${r.cr ? money(r.cr) : ''}</td><td class="r">${balCell(r.bal)}</td></tr>`);
+  const pr = st.profile || {};
+  const lines = sellerS
+    ? [pr.phone || pr.addr ? esc([pr.phone ? 'মোবাইল: ' + pr.phone : '', pr.addr || ''].filter(Boolean).join(' · ')) : '',
+       `ক্রেতা: <b>${esc(st.shop)}</b>${st.phone ? ' · ' + esc(st.phone) : ''}`,
+       `হিসাবের স্টেটমেন্ট · ${fmtDate(st.start)} – ${fmtDate(st.end)}`].filter(Boolean)
+    : [st.phone ? `ফোন: ${esc(st.phone)}` : '', `হিসাবের স্টেটমেন্ট · ${fmtDate(st.start)} – ${fmtDate(st.end)}`].filter(Boolean);
+  const endLbl = st.closing > 0 ? (sellerS ? 'সময়কাল শেষে পাওনা' : 'সময়কাল শেষে বাকি') : st.closing < 0 ? 'সময়কাল শেষে অগ্রিম' : 'সম্পূর্ণ পরিশোধিত';
+  return pagedHTML({
+    h1: sellerS ? (pr.name || CONFIG.appName) : st.shop, lines,
+    cols: '<colgroup><col style="width:92px"><col><col style="width:84px"><col style="width:84px"><col style="width:96px"></colgroup>',
+    thead: `<tr><th>তারিখ</th><th>বিবরণ</th><th class="r">${sellerS ? 'বাকি দিলাম (+)' : 'বাকি (+)'}</th><th class="r">${sellerS ? 'জমা পেলাম (−)' : 'জমা (−)'}</th><th class="r">ব্যালেন্স</th></tr>`,
+    rows: trs,
+    summary: `<div class="sum">
+        <div><span>এই সময়ে মোট বাকি (+)</span><span>${money(st.dr)}</span></div>
+        <div><span>এই সময়ে মোট জমা (−)</span><span>${money(st.cr)}</span></div>
+      </div>
+      <div class="final ${fin.cls}"><span>${endLbl}</span><span>${money(Math.abs(st.closing))}</span></div>
+      ${st.closing !== 0 ? `<div class="words">কথায়: ${esc(amountWords(Math.abs(st.closing)))}</div>` : ''}
+      <div class="words" style="font-size:11px">ঋণাত্মক (−) ব্যালেন্স মানে অগ্রিম জমা।</div>`
   });
 }
 function statementDoc(st, fromYmd, toYmd) {
   const fin = balView(st.closing);
-  const msg = `আসসালামু আলাইকুম ${st.shop} ভাই,\n\nআপনার হিসাবের স্টেটমেন্ট (${fmtDate(st.start)} – ${fmtDate(st.end)})\nপূর্বের জের: ${balCell(st.opening)}\nমোট বাকি: ${money(st.dr)}\nমোট জমা: ${money(st.cr)}\nসময়কাল শেষে ${fin.label}: ${fin.txt}\n\nধন্যবাদ।\n(${CONFIG.appName})`;
+  const sellerS = st.mode === 'seller';
+  const who = sellerS ? (st.profile.name || CONFIG.appName) : '';
+  const msg = `আসসালামু আলাইকুম ${st.shop} ভাই,\n\nআপনার হিসাবের স্টেটমেন্ট (${fmtDate(st.start)} – ${fmtDate(st.end)})\nপূর্বের জের: ${balCell(st.opening)}\nমোট বাকি: ${money(st.dr)}\nমোট জমা: ${money(st.cr)}\nসময়কাল শেষে ${fin.label}: ${fin.txt}\n\nধন্যবাদ।\n${sellerS ? '— ' + who : '(' + CONFIG.appName + ')'}`;
   return { title: 'স্টেটমেন্ট প্রস্তুত', info: `${st.shop} · ${nf.format(st.count)} টি লেনদেন · ${fin.label}: ${fin.txt}`, name: `statement-${fromYmd}_${toYmd}.pdf`,
-           make: () => makeStatementPdf(st), phone: normPhone(st.phone), msg, html: () => statementPages(st).join(''), kind: 'statement' };
+           make: () => makePagesPdf(statementPages(st)), phone: normPhone(st.phone), msg, html: () => statementPages(st).join(''), kind: 'statement' };
 }
 let stKey = '';
 function openStatement(key) {
@@ -878,7 +1083,69 @@ $('stGo').onclick = () => {
   if (!st) return;
   closeDlg($('stDlg'));
   openDoc(statementDoc(st, f, t));
-  track('statement_open');
+  track('statement_open', { role: mode });
+};
+
+/* ============ বকেয়া তালিকা (দোকানদার) ============ */
+function dueListData() {
+  const today = ymd(Date.now());
+  return groupShops().filter(s => s.bal > 0).map(s => ({ name: s.name, phone: s.phone, bal: s.bal, info: overdueInfo(s.list, today) })).sort((a, b) => b.bal - a.bal);
+}
+function dueListPages(list) {
+  const pr = getProfile();
+  const total = list.reduce((s, x) => s + x.bal, 0);
+  const odAmt = list.reduce((s, x) => s + Math.min(x.info.overdue, x.bal), 0);
+  const odN = list.filter(x => x.info.overdue > 0).length;
+  const rows = list.map(x => {
+    const late = x.info.overdue > 0;
+    const dueTxt = late ? `⏰ ${fmtYmd(x.info.oldest)}` : (x.info.nextDue ? fmtYmd(x.info.nextDue) : '—');
+    return `<tr><td title="${esc(x.name)}">${esc(x.name)}</td><td>${esc(x.phone || '—')}</td><td class="${late ? 'late' : ''}">${dueTxt}</td><td class="r">${money(x.bal)}</td></tr>`;
+  });
+  return pagedHTML({
+    h1: pr.name || CONFIG.appName,
+    lines: [pr.phone || pr.addr ? esc([pr.phone ? 'মোবাইল: ' + pr.phone : '', pr.addr || ''].filter(Boolean).join(' · ')) : '', `বকেয়া তালিকা · ${fmtDate(Date.now())}`].filter(Boolean),
+    cols: '<colgroup><col><col style="width:116px"><col style="width:116px"><col style="width:104px"></colgroup>',
+    thead: '<tr><th>ক্রেতা</th><th>ফোন</th><th>পরিশোধের তারিখ</th><th class="r">পাওনা</th></tr>',
+    rows,
+    summary: `<div class="sum">
+        <div><span>বাকি আছে এমন ক্রেতা</span><span>${nf.format(list.length)} জন</span></div>
+        ${odN ? `<div><span>মেয়াদোত্তীর্ণ (${nf.format(odN)} জন)</span><span style="color:#b91c1c;font-weight:700">${money(odAmt)}</span></div>` : ''}
+      </div>
+      <div class="final due"><span>মোট পাওনা</span><span>${money(total)}</span></div>
+      <div class="words">কথায়: ${esc(amountWords(total))}</div>`
+  });
+}
+$('btnDue').onclick = () => {
+  const list = dueListData();
+  if (!list.length) { alert('বর্তমানে কোনো ক্রেতার বাকি নেই।'); return; }
+  const total = list.reduce((s, x) => s + x.bal, 0);
+  openDoc({ title: 'বকেয়া তালিকা প্রস্তুত', info: `${nf.format(list.length)} জন ক্রেতা · মোট পাওনা ${money(total)}`, name: `due-list-${ymd(Date.now())}.pdf`,
+            make: () => makePagesPdf(dueListPages(list)), phone: '', msg: '', html: () => dueListPages(list).join(''), kind: 'duelist' });
+  track('duelist_open');
+};
+
+/* ============ তাগাদা (দোকানদার) ============ */
+function sendReminder(key) {
+  const g = groupShops().find(s => keyOf(s.name) === key);
+  if (!g || g.bal <= 0) return;
+  const phone = normPhone(g.phone);
+  if (!phone) { alert('হোয়াটসঅ্যাপ নম্বর দেওয়া হয়নি!'); return; }
+  const pr = getProfile();
+  const info = overdueInfo(g.list);
+  const dateTxt = info.overdue > 0 ? `\nপরিশোধের কথা ছিল ${fmtYmd(info.oldest)} তারিখে।` : (info.nextDue ? `\nপরিশোধের তারিখ: ${fmtYmd(info.nextDue)}।` : '');
+  const msg = `আসসালামু আলাইকুম ${g.name} ভাই,\n\n${pr.name ? pr.name + '-এ' : 'আমাদের দোকানে'} আপনার বর্তমান বাকি ${money(g.bal)}।${dateTxt}\nঅনুগ্রহ করে সুবিধামতো পরিশোধ করবেন।\n\nধন্যবাদ।${pr.name ? '\n— ' + pr.name : ''}${pr.phone ? ' (' + pr.phone + ')' : ''}`;
+  openExternal(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
+  track('reminder_send');
+}
+
+/* ============ দোকানদারের তথ্য ============ */
+$('btnProfile').onclick = () => { const p = getProfile(); $('pName').value = p.name; $('pPhone').value = p.phone; $('pAddr').value = p.addr; openDlg($('pDlg')); };
+$('pCancel').onclick = () => closeDlg($('pDlg'));
+$('pSave').onclick = () => {
+  const name = $('pName').value.trim();
+  if (!name) { alert('দোকানের নাম লিখুন।'); return; }
+  lsSet(PROFILE_KEY, JSON.stringify({ name, phone: $('pPhone').value.trim(), addr: $('pAddr').value.trim() }));
+  closeDlg($('pDlg')); track('profile_save');
 };
 
 /* ============ লেনদেন সম্পাদনা ============ */
@@ -887,7 +1154,7 @@ function openEdit(id) {
   const t = tx.find(x => String(x.id) === id);
   if (!t || t.billId) return;
   editId = id;
-  $('eType').value = t.type; $('eAmount').value = t.paisa / 100; $('eDesc').value = t.desc || ''; $('eDate').value = ymd(t.ts);
+  $('eType').value = t.type; $('eAmount').value = t.paisa / 100; $('eDesc').value = t.desc || ''; $('eDate').value = ymd(t.ts); $('eDue').value = t.due || '';
   openDlg($('eDlg'));
 }
 $('eCancel').onclick = () => closeDlg($('eDlg'));
@@ -899,21 +1166,23 @@ $('eSave').onclick = () => {
   t.type = $('eType').value; t.paisa = p; t.desc = $('eDesc').value.trim();
   const d = $('eDate').value;
   if (d && d !== ymd(t.ts)) t.ts = new Date(d + 'T12:00:00').getTime();
+  if (mode === 'seller') { if (t.type === 'baki' && $('eDue').value) t.due = $('eDue').value; else delete t.due; }
   save(); render(); recalc(); closeDlg($('eDlg')); track('edit_transaction');
 };
 
-/* ============ দোকানের নাম বদল / মার্জ ============ */
+/* ============ নাম বদল / মার্জ / বাকির সীমা ============ */
 let renKey = '';
 function openRename(key) {
   const g = groupShops().find(s => keyOf(s.name) === key);
   if (!g) return;
   renKey = key; $('sName').value = g.name; $('sPhone').value = '';
+  $('sLimit').value = meta.limits[key] ? meta.limits[key] / 100 : '';
   openDlg($('sDlg'));
 }
 $('sCancel').onclick = () => closeDlg($('sDlg'));
 $('sSave').onclick = () => {
   const nn = $('sName').value.trim();
-  if (!nn) { alert('দোকানের নাম লিখুন।'); return; }
+  if (!nn) { alert('নাম লিখুন।'); return; }
   const target = keyOf(nn);
   const merging = target !== renKey && tx.some(t => keyOf(t.shop) === target);
   if (merging && !confirm(`"${nn}" নামে আগে থেকেই একটি খাতা আছে। দুটি খাতা মিলিয়ে একটি হয়ে যাবে। চালিয়ে যাবেন?`)) return;
@@ -925,6 +1194,11 @@ $('sSave').onclick = () => {
       if (t.voucher) { t.voucher.shop = nn; if (ph) t.voucher.shopPhone = ph; }
     }
   });
+  if (mode === 'seller') {
+    const lim = toPaisa($('sLimit').value);
+    delete meta.limits[renKey];
+    if (lim) meta.limits[target] = lim; else delete meta.limits[target];
+  } else if (target !== renKey && meta.limits[renKey]) { meta.limits[target] = meta.limits[renKey]; delete meta.limits[renKey]; }
   save(); render(); recalc(); closeDlg($('sDlg')); track(merging ? 'merge_shop' : 'rename_shop');
 };
 
@@ -950,6 +1224,7 @@ $('shopListWrap').addEventListener('click', e => {
   if (vc) { const t = tx.find(x => String(x.id) === vc.dataset.vc); if (t && t.voucher) openDoc(voucherDoc(t.voucher)); return; }
   const st = e.target.closest('[data-st]'); if (st) { openStatement(st.dataset.st); return; }
   const rn = e.target.closest('[data-ren]'); if (rn) { openRename(rn.dataset.ren); return; }
+  const rm = e.target.closest('[data-rem]'); if (rm) { sendReminder(rm.dataset.rem); return; }
   const wa = e.target.closest('[data-wa]'); if (wa) sendWhatsApp(wa.dataset.wa);
 });
 
@@ -960,30 +1235,34 @@ function sendWhatsApp(shopKey) {
   if (!phone) { alert('হোয়াটসঅ্যাপ নম্বর দেওয়া হয়নি!'); return; }
   const t = g.list[0];
   const b = balView(g.bal);
-  const act = t.type === 'baki' ? `৳${nf.format(t.paisa / 100)} বাকি নেওয়া হলো` : `৳${nf.format(t.paisa / 100)} পরিশোধ করা হলো`;
-  const msg = `আসসালামু আলাইকুম ${g.name} ভাই,\n\n${fmtDate(t.ts)} তারিখে আপনার হিসাবে ${act}।\nবিবরণ: ${t.desc || 'নাই'}\n\nবর্তমান মোট ${b.label}: ${b.txt}\n\nধন্যবাদ।\n(${CONFIG.appName} থেকে প্রেরিত)`;
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+  const sellerM = mode === 'seller';
+  const act = sellerM
+    ? (t.type === 'baki' ? `৳${nf.format(t.paisa / 100)} বাকি দেওয়া হলো` : `৳${nf.format(t.paisa / 100)} জমা পেয়েছি`)
+    : (t.type === 'baki' ? `৳${nf.format(t.paisa / 100)} বাকি নেওয়া হলো` : `৳${nf.format(t.paisa / 100)} পরিশোধ করা হলো`);
+  const pr = getProfile();
+  const msg = `আসসালামু আলাইকুম ${g.name} ভাই,\n\n${fmtDate(t.ts)} তারিখে আপনার হিসাবে ${act}।\nবিবরণ: ${t.desc || 'নাই'}\n\nবর্তমান মোট ${b.label}: ${b.txt}\n\nধন্যবাদ।\n${sellerM && pr.name ? '— ' + pr.name : '(' + CONFIG.appName + ' থেকে প্রেরিত)'}`;
+  openExternal(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`);
   track('whatsapp_share', { kind: 'summary' });
 }
 
 /* ============ Backup / Restore ============ */
-function download(name, text, type) {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([text], { type }));
-  a.download = name; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-}
 const stamp = () => ymd(Date.now());
-const backupJSON = () => JSON.stringify({ v: 3, vno: meta.vno, tx }, null, 1);
-function doBackupDownload() {
+const backupJSON = () => JSON.stringify({ v: 4, mode, vno: meta.vno, limits: meta.limits, tx }, null, 1);
+const backupName = () => `baki-backup-${mode}-${stamp()}.json`;
+async function download(name, text, type) { await saveBlob(name, new Blob([text], { type }), type.split(';')[0]); }
+async function doBackupDownload() {
   if (!tx.length) { alert('ব্যাকআপ নেওয়ার মতো কোনো ডেটা নেই।'); return false; }
-  download(`baki-backup-${stamp()}.json`, backupJSON(), 'application/json');
+  await download(backupName(), backupJSON(), 'application/json');
   markBackup(); track('export_backup', { format: 'json' });
   return true;
 }
 async function doBackupShare() {
   if (!tx.length) { alert('ব্যাকআপ নেওয়ার মতো কোনো ডেটা নেই।'); return; }
-  const name = `baki-backup-${stamp()}.json`;
+  const name = backupName();
+  if (APP) {
+    await shareBlobApp(name, new Blob([backupJSON()], { type: 'application/json' }), 'application/json');
+    markBackup(); track('backup_share'); return;
+  }
   for (const type of ['application/json', 'text/plain']) {
     try {
       const file = new File([backupJSON()], name, { type });
@@ -993,19 +1272,19 @@ async function doBackupShare() {
       }
     } catch (e) { if (e && e.name === 'AbortError') return; }
   }
-  doBackupDownload();   // শেয়ার সম্ভব না হলে ডাউনলোড
+  await doBackupDownload();   // শেয়ার সম্ভব না হলে ডাউনলোড
 }
 $('btnExport').onclick = doBackupDownload;
 $('btnBkShare').onclick = doBackupShare;
 $('bkGo').onclick = doBackupShare;
 $('bkLater').onclick = () => { lsSet(SNOOZE, String(Date.now() + 864e5)); renderBanner(); };
-$('btnCsv').onclick = () => {
+$('btnCsv').onclick = async () => {
   if (!tx.length) { alert('কোনো ডেটা নেই।'); return; }
   const q = v => '"' + String(v).replace(/"/g, '""') + '"';
-  const rows = [['তারিখ', 'দোকান', 'ফোন', 'ধরন', 'টাকা', 'বিবরণ'].map(q).join(',')];
+  const rows = [['তারিখ', mode === 'seller' ? 'ক্রেতা' : 'দোকান', 'ফোন', 'ধরন', 'টাকা', 'বিবরণ'].map(q).join(',')];
   [...tx].sort((a, b) => a.ts - b.ts).forEach(t => rows.push([
     ymd(t.ts), t.shop, t.phone, t.type === 'baki' ? 'বাকি' : 'জমা', t.paisa / 100, t.desc].map(q).join(',')));
-  download(`baki-${stamp()}.csv`, '﻿' + rows.join('\n'), 'text/csv;charset=utf-8');
+  await download(`baki-${mode}-${stamp()}.csv`, '﻿' + rows.join('\n'), 'text/csv;charset=utf-8');
   track('export_backup', { format: 'csv' });
 };
 $('btnImport').onclick = () => $('importFile').click();
@@ -1014,16 +1293,24 @@ $('importFile').onchange = async e => {
   if (!f) return;
   try {
     const d = JSON.parse(await f.text());
+    const fileMode = d.mode === 'seller' ? 'seller' : 'buyer';
+    if (fileMode !== mode) {
+      const nm = m => m === 'seller' ? 'দোকানদার' : 'ক্রেতা';
+      if (!confirm(`এই ব্যাকআপটি "${nm(fileMode)}" মোডের। "${nm(fileMode)}" মোডে গিয়ে রিস্টোর করবেন?`)) return;
+      setMode(fileMode);
+    }
     const incoming = (Array.isArray(d.tx) ? d.tx : []).filter(t => t && t.shop && t.paisa > 0 && (t.type === 'baki' || t.type === 'pari'))
       .map(t => ({ id: t.id ?? newId(), shop: String(t.shop), phone: String(t.phone || ''), type: t.type,
                    paisa: Math.round(t.paisa), desc: String(t.desc || ''), ts: Number(t.ts) || Date.now(),
-                   ...(t.billId ? { billId: String(t.billId) } : {}), ...(t.voucher && typeof t.voucher === 'object' ? { voucher: t.voucher } : {}) }));
+                   ...(t.billId ? { billId: String(t.billId) } : {}), ...(t.due ? { due: String(t.due) } : {}),
+                   ...(t.voucher && typeof t.voucher === 'object' ? { voucher: t.voucher } : {}) }));
     if (!incoming.length) { alert('ফাইলে কোনো সঠিক ডেটা পাওয়া যায়নি।'); return; }
     const have = new Set(tx.map(t => String(t.id)));
     const fresh = incoming.filter(t => !have.has(String(t.id)));
     if (!confirm(`${nf.format(fresh.length)} টি নতুন লেনদেন যোগ করা হবে। চালিয়ে যাবেন?`)) return;
     tx = tx.concat(fresh).sort((a, b) => b.ts - a.ts);
     meta.vno = Math.max(meta.vno, Number(d.vno) || 0, ...tx.map(t => (t.voucher && t.voucher.vno) || 0));
+    if (d.limits && typeof d.limits === 'object') meta.limits = Object.assign({}, d.limits, meta.limits);
     save(); render(); recalc(); track('import_backup');
   } catch (err) { alert('ফাইলটি পড়া যায়নি। সঠিক ব্যাকআপ ফাইল দিন।'); }
 };
@@ -1034,12 +1321,13 @@ $('devPhone').textContent = 'Contact: ' + CONFIG.contactPhone;
 $('devPhone').href = 'tel:' + CONFIG.contactPhone;
 $('devPhone').addEventListener('click', () => track('contact_click'));
 $('btnShare').onclick = async () => {
+  if (APP) { window.AndroidBridge.shareText(`${CONFIG.appName} — বাকি হিসাব, ক্যাশ মেমো ও পিডিএফ ভাউচার।\nDeveloped by ${CONFIG.developer} (${CONFIG.contactPhone})`); track('share_app'); return; }
   const data = { title: CONFIG.appName, text: 'সহজে দোকানের বাকি হিসাব রাখুন:', url: location.href.split('#')[0] };
   try { if (navigator.share) await navigator.share(data); else { await navigator.clipboard.writeText(data.url); alert('লিংক কপি হয়েছে।'); } track('share_app'); } catch (e) {}
 };
 
 let deferredInstall = null;
-const isStandalone = () => (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+const isStandalone = () => APP || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; if (!isStandalone()) $('btnInstall').hidden = false; });
 window.addEventListener('appinstalled', () => { $('btnInstall').hidden = true; deferredInstall = null; track('pwa_install'); });
@@ -1057,12 +1345,21 @@ $('btnInstall').onclick = async () => {
   }
 };
 
-if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+// অ্যান্ড্রয়েডের Back বাটন: খোলা ডায়ালগ/টোস্ট বন্ধ করে; কিছু না থাকলে false (অ্যাপ বন্ধ হবে)
+window.__back = function () {
+  const dlgs = [...document.querySelectorAll('dialog[open]')];
+  if (dlgs.length) { closeDlg(dlgs[dlgs.length - 1]); return true; }
+  if (!$('toast').hidden) { hideToast(); return true; }
+  return false;
+};
+
+if (!APP && 'serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 
 /* ============ Start ============ */
 addRow();
+applyMode();
 setTab(lsGet('baki_tab') === 'quick' ? 'quick' : 'bill');
 initGA();
 trackUsers();
